@@ -1,0 +1,234 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.survey-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.371); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.img-div{
+    background-image:  url("../images/survey2\ \(2\).png");
+    background-size: cover;
+    padding: 0px !important;
+    height: 600px;
+}
+
+.right-div {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end; 
+    justify-content: center; 
+    text-align: center; 
+    flex-wrap: wrap;
+    margin-right: 70px;
+}
+
+.right {
+    align-content: flex-end; 
+    justify-content: center; 
+    text-align: center; 
+    margin: 170px 0;
+}
+
+.row {
+    margin-top: 80px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.choices {
+    margin-right:  0 !important;
+}
+
+.column-text {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;   
+}
+
+.column-text p{
+    font-size: 14px;
+    line-height: 1rem;
+    font-weight: 500;
+    color: #383838;
+    text-transform: uppercase;
+}
+
+.column-text h6{
+    font-size: 32px;
+    font-weight: 500;
+    color: #000000;
+    text-transform: none;
+}
+
+.survey-popup {
+    background: #ffffff;
+    border-radius: 5px;
+    text-align: center;
+    width: 900px;
+    height: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.survey-page {
+    padding: 40px;
+}
+
+.popup h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+label span {
+    margin-left: 10px;
+}
+
+left h6 {
+    font-size: 26px;
+}
+
+.choice-radio-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+
+.left h6{
+    font-size: 28px !important;
+    margin-bottom: 15px !important;
+
+}
+
+.title {
+    font-size: 12px !important;
+    color:#6495ED !important;
+}
+
+.message {
+    font-size: 17px !important;
+    text-transform: none !important;
+    font-weight: 400 !important;
+}
+
+.choice {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border-radius: 3px;
+    border: 2px solid #ddd;   
+    margin: 5px;
+    padding: 10px;
+    width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+/* .radio-btn input[type=radio] {
+    display: inline-block; 
+} */
+
+.choice:hover {
+    border-color: #6495ED; 
+}
+
+.choice .radio-btn input[type="radio"] {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* 
+.choice:hover .radio-btn input[type="radio"] {
+    border-color: #6495ED;
+    accent-color: #618bd8 !important 
+} */
+
+
+.choice .radio-btn input[type="radio"]:checked {
+    accent-color: #618bd8 !important;
+    /* border-color: #6495ED; */
+}
+
+.choice span {
+    padding: 0 15px;
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.btn-survey-primary {
+    margin-top: 20px;
+    padding: 13px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #8eb0f0;
+    color: white;
+}
+
+.btn-survey-primary:hover {
+    background: #c4d7fb;
+    color: white;
+}
+
+button.hidden {
+    display: none;
+}
+
+.survey-page.hidden {
+    display: none;
+}
+
+.progress-indicator {
+    display: none;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.progress-indicator .dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #ddd;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.dotactive {
+    background-color: #8eb0f0 !important; 
+}
+
+.hidden {
+    display: none;
+}

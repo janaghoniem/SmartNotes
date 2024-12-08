@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+body {
+	background: #ebecef  !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+li {
+	margin-left: 16px;
+}
+
+a {
+	cursor: pointer;
+}
+
+.page-title{
+	margin-top:5vh;
+    margin-left:40vh;
+    padding-bottom:5vh;
+}
+
+
+
+/* .search-bar{
+    transform: translatex(60%);   
+    
+} */
+
+
+.textArea-container {
+	max-width: 991px;
+	width: 100%;
+	background: #F9F8F8;
+	border-radius: 8px;
+	border: 1px solid #000;
+	overflow: hidden;
+    position: absolute;
+    margin-left:20%;
+	
+}
+.toolbar {
+	padding: 16px;
+	background: #d4d5d9;
+}
+.toolbar .head {
+	display: flex !important;
+	grid-gap: 10px;
+	margin-bottom: 16px;
+	flex-wrap: wrap;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    
+}
+.toolbar .head > input {
+	max-width: 100px;
+	padding: 6px 10px;
+	border-radius: 6px;
+	border: 2px solid #ddd;
+	outline: none;
+}
+.toolbar .head select {
+	background: #fff;
+	border: 2px solid #ddd;
+	border-radius: 6px;
+	outline: none;
+	cursor: pointer;
+}
+.toolbar .head .color {
+	background: #fff;
+	border: 2px solid #ddd;
+	border-radius: 6px;
+	outline: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	grid-gap: 6px;
+	padding: 0 10px;
+}
+.toolbar .head .color span {
+	font-size: 14px;
+}
+.toolbar .head .color input {
+	border: none;
+	padding: 0;
+	width: 26px;
+	height: 26px;
+	background: #fff;
+	cursor: pointer;
+}
+.toolbar .head .color input::-moz-color-swatch {
+	width: 20px;
+	height: 20px;
+	border: none;
+	border-radius: 50%;
+}
+.toolbar .btn-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	grid-gap: 10px;
+}
+.toolbar .btn-toolbar button {
+	background: #fff;
+	border: 2px solid #ddd;
+	border-radius: 6px;
+	cursor: pointer;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 18px;
+}
+.toolbar .btn-toolbar button:hover {
+	background: #f3f3f3;
+}
+#content {
+	padding: 16px;
+	outline: none;
+	max-height: 80vh;
+	overflow: auto;
+    height:45vh;
+}
+
+@media screen and (max-width: 768px) {
+	.toolbar .head {
+		flex-direction: column; /* Stack elements vertically */
+		align-items: flex-start; /* Align to the start of the container */
+	}
+ 
+	.toolbar .head > input,
+	.toolbar .head select,
+	.toolbar .head .color {
+		width: 100%; /* Make child elements take full width */
+		margin-bottom: 8px; /* Add spacing between stacked items */
+	}
+
+	.page-title{
+		margin-top:5vh;
+		margin-left:20vh;
+		padding-bottom:2vh;
+		font-size: 10px;
+	}
+	
+}
+
+
+
+
+
+
+
+
+  

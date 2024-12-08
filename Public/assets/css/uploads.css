@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+} */
+
+.containers {
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: #fcfcfc;
+  padding: 20px; /* Added padding for small screens */
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+  width: 100%; /* Use full width */
+  max-width: 600px; /* Limit max width */
+  height: auto; /* Allow height to adjust */
+  background-color: #ffffff;
+  padding: 10px 30px 40px;
+}
+
+.card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center; /* Center heading text */
+}
+
+.drop_box {
+  margin: 10px 0;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 3px dotted #a3a3a3;
+  border-radius: 5px;
+}
+
+.drop_box h4 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #2e2e2e;
+  text-align: center; /* Center text */
+}
+
+.drop_box p {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: #a3a3a3;
+  text-align: center; /* Center text */
+}
+
+.btn {
+  text-decoration: none;
+  background-color: #005af0;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  transition: 0.3s;
+  cursor: pointer; /* Pointer cursor for buttons */
+}
+
+.btn:hover {
+  text-decoration: none;
+  background-color: #ffffff;
+  color: #005af0;
+  padding: 10px 20px;
+  border: none;
+  outline: 1px solid #010101;
+}
+
+.form input {
+  margin: 10px 0;
+  width: 100%; /* Full width for input */
+  background-color: #e2e2e2;
+  border: none;
+  outline: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  text-align: center; /* Center text inside input */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .card {
+    padding: 10px 15px; /* Reduce padding on smaller screens */
+  }
+
+  .drop_box {
+    padding: 20px; /* Reduce padding in drop box */
+  }
+
+  .btn {
+    padding: 8px 16px; /* Smaller button size */
+  }
+
+  .card h3 {
+    font-size: 20px; /* Adjust heading size */
+  }
+
+  .drop_box h4 {
+    font-size: 14px; /* Adjust subheading size */
+  }
+
+  .drop_box p {
+    font-size: 10px; /* Adjust paragraph size */
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 90%; /* Make card width responsive */
+  }
+
+  .card h3 {
+    font-size: 18px; /* Further adjust heading size */
+  }
+
+  .drop_box h4 {
+    font-size: 12px; /* Further adjust subheading size */
+  }
+
+  .drop_box p {
+    font-size: 8px; /* Further adjust paragraph size */
+  }
+}

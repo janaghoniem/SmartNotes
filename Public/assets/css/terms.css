@@ -1,0 +1,125 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Karla', sans-serif;
+}
+
+/* Container styling */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+}
+
+/* Main Heading */
+h1 {
+    font-size: 2.5rem;
+    color: #2A9D8F;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h1 span {
+    color: #E893C5; /* Highlight color for SmartNotes */
+}
+
+/* Subheading Styles */
+h2 {
+    font-size: 1.8rem;
+    color: #2A9D8F;
+    margin-top: 20px;
+    border-bottom: 2px solid #E893C5;
+    padding-bottom: 5px;
+}
+
+/* Paragraph styling */
+p {
+    line-height: 1.7;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Link Styling */
+a {
+    color: #2A9D8F;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Button Styling */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #E76F51;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #2A9D8F;
+}
+
+/* Introduction Section Styling */
+.intro-section {
+    background-color: #F4F1DE;
+    padding: 50px 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.intro-section h1 {
+    font-size: 2.2rem;
+    color: #264653;
+    margin-bottom: 20px;
+}
+
+.intro-section h1 span {
+    color: #E76F51;
+}
+
+.intro-section p {
+    font-size: 1.2rem;
+    color: #264653;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+}

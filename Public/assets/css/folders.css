@@ -1,0 +1,277 @@
+.main-container {
+    display: flex;
+    height: 100vh;
+}
+
+.content-area {
+    flex-grow: 1;
+    margin: 20px;
+    background-color: white;
+    margin-left: -350px;
+    max-width: calc(100% - 280px);
+    box-sizing: border-box;
+}
+
+.item-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.item {
+    flex-basis: 300em;
+    padding: 30px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+/* .item {
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    flex: 1 1 200px; 
+    max-width: 18%;
+    box-sizing: border-box;
+    width: 700px;
+} */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-header h1 {
+    font-size: 36px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    left: 20px;
+}
+
+.search-bar input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.profile-icon {
+    font-size: 20px;
+}
+
+.recent-items,
+.my-items {
+    margin-top: 30px;
+}
+
+.filter-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-options button {
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.filter-options button:hover {
+    background-color: #f1f1f1;
+    color: #555;
+    border-radius: 5px;
+}
+
+
+.records {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.item,
+.record {
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    flex-grow: 1;
+    text-align: center;
+    min-width: 200px;
+    max-width: 18%;
+    box-sizing: border-box;
+}
+
+.item {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.item .date {
+    color: #999;
+    font-size: 9px;
+    margin-top: 5px;
+    display: block;
+}
+
+.item i.fa-folder {
+    margin-bottom: 15px;
+    margin-top: 5px;
+    font-size: 30px;
+}
+
+.item.blue {
+    background-color: #d8e8fc;
+}
+
+.item.blue i {
+    color: #6098e2;
+    font-size: 30px;
+}
+
+.item.red {
+    background-color: #FDE2E1;
+}
+
+.item.red i {
+    color: #E66A6A;
+    font-size: 30px;
+}
+
+.item.yellow {
+    background-color: #FEF9D4;
+}
+
+.item.yellow i {
+    color: #dccd62;
+    font-size: 30px;
+}
+
+.item.empty,
+.record.empty {
+    border: 2px dashed #ddd;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.content-box {
+    background-color: #f9f8f8;
+    border: 1px solid #f9f8f8;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .content-area {
+        margin-left: 0; /* Avoid fixed margins on small screens */
+    }
+
+    .item-list,
+    .records {
+        gap: 10px;
+    }
+
+    .item,
+    .record {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+        margin-left: 30px;
+    }
+
+    .filter-options {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .search-bar input {
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .filter-options {
+        gap: 3px;
+    }
+
+    .item-list,
+    .records {
+        gap: 5px;
+    }
+
+    .item,
+    .record {
+        padding: 10px;
+    }
+
+    .item i,
+    .record h3 {
+        font-size: 16px;
+    }
+
+    .item .date,
+    .record span {
+        font-size: 8px;
+    }
+
+    .record p {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .toggle-sidebar {
+        display: block;
+        position: absolute;
+        top: 18px;
+        left: 20px;
+        font-size: 25px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .sidebar.open {
+        display: flex;
+        margin-top: 20px;
+    }
+
+    .main-container {
+        flex-direction: column;
+    }
+}
