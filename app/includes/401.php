@@ -1,5 +1,5 @@
 <?php
-include_once 'User.php';
+require_once __DIR__ . '/../Models/User.php';
 session_start();	
 if(!$_SESSION['UserID']){
   Header('Location: ../pages/login.php');

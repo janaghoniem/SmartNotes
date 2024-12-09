@@ -1,7 +1,7 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '../Config/Database.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/test/includes/UserType.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/test/includes/UserActivity.php';
+require_once __DIR__ . '/../Config/Database.php';
+include 'UserType.php';
+include 'UserActivity.php';
 
 // Create connection
 $con = new mysqli("localhost", "root", "", "smartnotes_db");
@@ -39,7 +39,7 @@ class User {
             $this->email = $row['email'];
             $this->password = $row['password'];
             $this->country = $row['country'];
-            $this->userType = $row['user_type'];
+            $this->userType_obj = new UserType($row["user_type"]);
             $this->created_at = $row['created_at'];
         }
     }

@@ -1,5 +1,5 @@
 <?php
-include_once '../includes/User.php';
+require_once __DIR__ . '../../Models/User.php';
 include_once '../includes/file_class.php';
 
 include '../includes/folder_class.php';
@@ -160,7 +160,7 @@ if (!$user) {
           <h3>What's on Your Mind?💡</h3>
           <div class="form-row">
             <div style="display: flex; align-content: center; justify-content: center;">
-              <img src="../assets/images/flower.png" alt="Upgrade icon" width="100px">
+              <img src="../../public/assets/images/flower.png" alt="Upgrade icon" width="100px">
               <div class="input-data">
                 <input type="text" id="name" name="name" required>
                 <div class="underline"></div>

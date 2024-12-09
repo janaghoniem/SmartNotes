@@ -1,5 +1,5 @@
 <?php
-require_once 'Models\User.php';
+require_once __DIR__ . '/../Models/User.php';
 class UserController
 {
     public function login()
@@ -12,11 +12,12 @@ class UserController
             if ($user) {
                 session_start();
                 $_SESSION['UserID'] = $user->id;
-                $firstPage = $user->userType_obj->pages_array[0]->link_address;
-                header("Location: " . htmlspecialchars($firstPage));
+                $firstPage = "UserDashboard.php"; // Ensure it's just the file name
+                header("Location: /smartnotes/app/Views/" . $firstPage);  // Absolute path from the root
+
             } else {
                 $error = "Invalid email or password";
-                include '../Views/login.php';
+                return $error;
             }
         }
     }
@@ -35,10 +36,10 @@ class UserController
             ];
 
             if (User::insertUser($data)) {
-                header("Location: /login");
+                header("Location: /smartnotes/app/Views/login.php");
             } else {
                 $error = "Registration failed. Email might already be in use.";
-                include '../Views/signup.php';
+                return $error;
             }
         }
     }

@@ -1,18 +1,3 @@
-<?php
-require_once 'controllers\UserController.php';
-
-$controller = new UserController();
-
-if ($_SERVER['REQUEST_URI'] == '/test/index.php/login') {
-  $controller->login();
-} elseif ($_SERVER['REQUEST_URI'] === '/test/index.php/register') {
-  $controller->register();
-} else {
-  echo "404 Not Found";
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,7 +55,7 @@ if ($_SERVER['REQUEST_URI'] == '/test/index.php/login') {
           <li><a href="#about">About</a></li>
           <li><a href="#faq">FAQ</a></li>
 
-          <li><a href="./login.php">Sign In</a></li>
+          <li><a href="../app/Views/login.php">Sign In</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -97,7 +82,7 @@ if ($_SERVER['REQUEST_URI'] == '/test/index.php/login') {
               thoughts—all in one place. Our platform empowers students, professionals, and lifelong learners to work
               more effectively and make the most of their time.</p>
             <div class="d-flex">
-              <a href="./pages/login.php" class="btn-get-started">Get Started</a>
+              <a href="../app/Views/login.php" class="btn-get-started">Get Started</a>
             </div>
           </div>
 
@@ -260,7 +245,7 @@ if ($_SERVER['REQUEST_URI'] == '/test/index.php/login') {
 
   </main>
   <?php
-  include 'footer.php';
+  include '../app/includes/footer.php';
   ?>
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
