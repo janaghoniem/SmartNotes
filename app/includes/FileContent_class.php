@@ -5,7 +5,10 @@ $con = new mysqli("localhost", "root", "", "smartnotes_db");
 
 // include '../includes/config.php';
 //include 'session.php';
-require_once __DIR__ . '/../Models/file_class.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . '../Models/file_class.php';
+//require_once __DIR__ . '/../Models/Page.php';
+
+
 
 $user_id = isset($_SESSION['UserID']) ? $_SESSION['UserID'] : null;
 
