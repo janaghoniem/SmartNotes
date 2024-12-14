@@ -1,5 +1,6 @@
 <?php
 include_once '../includes/trash_class.php';
+include_once '/../Controllers/FolderController.php'
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     

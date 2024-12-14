@@ -1,9 +1,10 @@
 <?php
+ob_start();
+
 include_once '../includes/session.php';
 
-$current_page = 'User dashboard';
-
-
+//set current page to update sidebar status
+$current_page = 'Folder Content';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,18 +12,44 @@ $current_page = 'User dashboard';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Notes</title>
+    <title>My Folders</title>
+    <link rel="stylesheet" href="../../public/assets/css/user_style.css">
+    <link rel="stylesheet" href="../../public/assets/css/folders.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- CSS Files -->
     <link href="../../public/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../../public/assets/css/now-ui-dashboard.css" rel="stylesheet" />
     <link href="../../public/assets/css/demo.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../public/assets/css/user_style.css">
-    <link rel="stylesheet" href="../../public/assets/css/survey.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .note,
+        .folder {
+            height: 12.5em !important;
+        }
+
+        button:disabled {
+            background-color: #e0e0e0;
+            color: #777;
+            cursor: not-allowed;
+            opacity: 0.6;
+            border: none;
+        }
+
+        .popover-btn:disabled {
+            background-color: #e0e0e0;
+            color: #888;
+        }
+
+        .black-placeholder::placeholder {
+            color: black !important;
+            opacity: 1;
+        }
+
         button:disabled {
             background-color: #e0e0e0;
             color: #777;
@@ -43,7 +70,6 @@ $current_page = 'User dashboard';
 
         .note {
             position: relative;
-            cursor: pointer;
         }
 
         .popover {
@@ -70,7 +96,6 @@ $current_page = 'User dashboard';
             border-bottom: 1px solid black;
 
         }
-
         .filter-buttons {
             display: flex;
             gap: 10px;
@@ -125,6 +150,8 @@ $current_page = 'User dashboard';
             display: block;
         }
     </style>
+
+
 </head>
 
 <body>
@@ -134,10 +161,15 @@ $current_page = 'User dashboard';
             <?php include '../includes/user_navbar.php' ?>
             <main class="content">
                 <section class="bordered-content">
-                    <h3 style="margin-bottom: 15px;">Recents</h3>
-
+                    <h3 style="margin-bottom: 15px;">
+                        <?php
+                        $current_folder_id = $_GET['folder_id'] ?? 1;
+                        $current_folder = new folder($current_folder_id);
+                        echo htmlspecialchars($current_folder->name);
+                        ?>
+                    </h3>
                     <section class="recent-folders">
-                        <div class="filter-buttons">
+                    <div class="filter-buttons">
                             <button class="filter-btn" data-filter="today">Today</button>
                             <button class="filter-btn" data-filter="this week">This Week</button>
                             <button class="filter-btn" data-filter="this month">This Month</button>
@@ -150,13 +182,15 @@ $current_page = 'User dashboard';
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="folders">
                             <?php
                             include_once '../includes/folder_class.php';
                             include_once '../includes/session.php';
                             $user_id = $_SESSION['UserID'];
-                            $obj = folder::readRecent($user_id);
+                            $current_folder_id = $_GET['folder_id'] ?? 1;
+
+                            $obj = folder::readByParent($user_id,$current_folder_id);
                             $colors = ['blue', 'yellow', 'red'];
                             if ($obj) {
                                 for ($j = 0; $j < count($obj); $j++) {
@@ -195,19 +229,12 @@ $current_page = 'User dashboard';
                             ?>
                         </div>
 
-                    </section>
-                    <section class="my-notes">
-                        <h3 style="margin-bottom: 15px;">My Notes</h3>
-
+                        <br>
                         <div class="notes">
+                        
                             <?php
-                            ini_set('display_errors', 1);
-                            ini_set('display_startup_errors', 1);
-                            error_reporting(E_ALL);
-                            
-                            require_once __DIR__ . '/../Models/file_class.php';
-                            
                             $user_id = $_SESSION['UserID'];
+                            require_once __DIR__ . '/../Models/file_class.php';
 
                             $folder_id = isset($_GET['folder_id']) ? $_GET['folder_id'] : null;
                             $files = file::readAll($user_id, $folder_id);
@@ -218,10 +245,12 @@ $current_page = 'User dashboard';
                                     <div class="note <?php echo $colors[$index % 3]; ?>"
                                         data-note-id="<?php echo $file['id']; ?>"
                                         data-created-at="<?php echo $file['created_at']; ?>">
+                                        <!-- Add data attribute for created_at -->
                                         <span><?php echo date('d/m/Y', strtotime($file['created_at'])); ?></span>
                                         <h3 class="note-name">
                                             <?php echo htmlspecialchars($file['name'], ENT_QUOTES, 'UTF-8'); ?>
                                             <i class="fa-solid fa-ellipsis ellipsis"></i>
+
                                             <div class="popover" style="z-index: 300000;">
                                                 <button class="popover-btn rename"
                                                     data-note-id="<?php echo $file['id']; ?>">Rename</button>
@@ -237,44 +266,32 @@ $current_page = 'User dashboard';
                                         <span
                                             class="bottom"><?php echo "⏱️ " . date('h:i A, l', strtotime($file['created_at'])); ?></span>
                                     </div>
-                                    <div id="no-results" style="display: none; text-align: center; color: gray;">
-                                        No results found.
-                                    </div>
+
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <p>No files found.</p>
                             <?php endif; ?>
+                        </div>
+                        <div id="no-results" style="display: none; text-align: center; color: gray;">
+                                        No results found.
+                                    </div>
+                    </section>
+                </section>
+            </main>
+        </div>
+        <script src="../../public/assets/js/sidebar.js"></script>
+        <!--   Core JS Files   -->
+        <script src="../../public/assets/js/core/jquery.min.js"></script>
+        <script src="../../public/assets/js/core/popper.min.js"></script>
+        <script src="../../public/assets/js/core/bootstrap.min.js"></script>
+        <script src="../../public/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+        <!-- Chart JS -->
+        <script src="../../public/assets/js/plugins/chartjs.min.js"></script>
+        <!--  Notifications Plugin    -->
+        <script src="../../public/assets/js/plugins/bootstrap-notify.js"></script>
+        <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+        <script src="../../public/assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script>
 
-                            <script>
-                                document.querySelectorAll('.note').forEach(note => {
-                                    note.addEventListener('click', function () {
-                                        const noteId = this.getAttribute('data-note-id');
-                                        if (noteId) {
-                                            window.location.href = `../pages/Note.php?id=${noteId}`;
-                                        } else {
-                                            console.error("Note ID is null or undefined.");
-                                        }
-                                    });
-                                });
-                            </script>
-
-
-                            <?php include '../includes/survey.php' ?>
-
-
-
-                            <script src="../../public/assets/js/sidebar.js"></script>
-                            <script src="../../public/assets/js/survey.js"></script>
-                            <script src="../../public/assets/js/core/jquery.min.js"></script>
-                            <script src="../../public/assets/js/core/popper.min.js"></script>
-                            <script src="../../public/assets/js/core/bootstrap.min.js"></script>
-                            <script src="../../public/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-                            <script src="../../public/assets/js/plugins/chartjs.min.js"></script>
-                            <script src="../../public/assets/js/plugins/bootstrap-notify.js"></script>
-                            <script src="../../public/assets/js/now-ui-dashboard.min.js?v=1.5.0"
-                                type="text/javascript"></script>
-
-                            <script src="../../public/assets/js/SearchandFilters.js"></script>
+        <script src="../../public/assets/js/SearchandFilters.js"></script>
 
 
 
@@ -282,3 +299,6 @@ $current_page = 'User dashboard';
 </body>
 
 </html>
+<?php
+ob_end_flush();
+?>

@@ -1,86 +1,22 @@
 <?php
 require_once __DIR__ . '../../Models/User.php';
-include_once '../includes/file_class.php';
 
-include '../includes/folder_class.php';
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+require_once __DIR__ . '/../Controllers/FolderController.php';
+
+
 if (isset($_POST["submit"])) {
-  $name = $_POST['name'];
-  $type = $_POST['dropdown'];
-  $parent_folder_id = $_GET['folder_id'] ?? 1;
-  $user_id = $_SESSION['UserID'];
-
-  if ($con->connect_error) {
-    die("Connection failed: " . $con->connect_error);
-  }
-  if ($type == "option2") {
-    $new_folder_id = folder::create($name, $user_id, $parent_folder_id);
-    if ($new_folder_id) {
-
-      header("Location:../pages/folder_contents.php?folder_id=$new_folder_id");
-      // header("Location:../pages/UserDashboard.php");
-      exit();
-    } else {
-      echo "ERROR!";
-    }
-  } else {
-
-    if ($type == "option3") {
-      $content = ""; // Default content or get from form if needed
-      $file_type = 4; // Assuming default file type ID (replace this if needed)
-
-      // Call the create method for the file
-      $new_file_id = file::create($name, $user_id, $parent_folder_id, $content, $file_type);
-
-      if ($new_file_id) {
-        // Redirect to another page with the new file ID in the URL
-        header("Location:../pages/speech.php?id=$new_file_id");
-        exit();
-      } else {
-        echo "ERROR!";
-      }
-    } else {
-      echo "<script>alert('Invalid selection! Please choose either a \"Folder\" or a \"File\".');</script>";
-    }
-  }
+  FolderController::create($con, $_POST, $_GET, $_SESSION);
 }
-
 ob_start();
 
-if (isset($_POST['item_id']) && isset($_POST['item_type'])) {
-  $item_id = intval($_POST['item_id']);
-  $item_type = $_POST['item_type'];
-
-  // Debugging outputs (remove or comment out these lines before deploying to production)
-  error_log("Move to trash request: ID = $item_id, Type = $item_type");
-
-  // Validation check
-  if ($item_id && in_array($item_type, ['folder', 'file'])) {
-    if ($item_type === 'folder') {
-      $result = folder::moveToTrash($item_id);
-    } elseif ($item_type === 'file') {
-      $result = file::moveToTrash($item_id);
-    }
-
-    if ($result) {
-      // Clear buffer and redirect
-      ob_end_clean();
-      header("Location: ../pages/trash.php");
-      exit();
-    } else {
-      echo "<script>alert('Error moving $item_type to trash.');</script>";
-    }
-  } else {
-    echo "<script>alert('Invalid item ID or type.');</script>";
-  }
-
-  // Flush the buffer in case of errors
-  ob_end_flush();
-}
+// if (isset($_POST['item_id']) && isset($_POST['item_type'])) {
+//   FolderController::moveToTrash($_POST);
+// }
 
 $user = new User($_SESSION['UserID']);
 if (!$user) {
