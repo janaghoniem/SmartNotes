@@ -1,10 +1,11 @@
 <?php
 error_reporting(E_ALL); // Enable error reporting
 ini_set('display_errors', 1); // Display errors
+$con = new mysqli("localhost", "root", "", "smartnotes_db");
 
-include '../includes/config.php';
+// include '../includes/config.php';
 //include 'session.php';
-include_once 'file_class.php';
+require_once __DIR__ . '/../Models/file_class.php';
 
 $user_id = isset($_SESSION['UserID']) ? $_SESSION['UserID'] : null;
 
@@ -26,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($file_id) {
         // Update the existing file
         $sql = "UPDATE files SET content='$content' WHERE id=$file_id";
-        if ($conn->query($sql) === TRUE) {
+        if ($con->query($sql) === TRUE) {
             echo "Record updated successfully";
         } else {
-            echo "Error updating record: " . $conn->error;
+            echo "Error updating record: " . $con->error;
         }
     } else {
         // Generate a file name or receive it from the front-end (you can customize this logic as needed)
@@ -47,15 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
-
-
-
-
 // Fetch the content for the file with id 1
 $file_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
 $sql = "SELECT content FROM files WHERE id=$file_id";
-$result = $conn->query($sql);
+$result = $con->query($sql);
 
 if ($result->num_rows > 0) {
     // Output data of each row
@@ -67,7 +63,7 @@ if ($result->num_rows > 0) {
 }
 
 // Disable strict mode temporarily
-$conn->query("SET sql_mode = ''");
+$con->query("SET sql_mode = ''");
 
-$conn->close();
+$con->close();
 ?>

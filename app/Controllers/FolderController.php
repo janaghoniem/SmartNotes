@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../includes/sidebar.php';
-
 class FolderController {
     public static function create($con, $post, $get, $session) {
       $name = $post['name'];
@@ -13,8 +12,11 @@ class FolderController {
       }
   
       if ($type == "option2") { // Creating a folder
+        require_once __DIR__ . '/../Models/folder_class.php';
+
         $new_folder_id = folder::create($name, $user_id, $parent_folder_id);
         if ($new_folder_id) {
+
           header("Location:../Views/folder_contents.php?folder_id=$new_folder_id");
           exit();
         } else {
@@ -23,7 +25,7 @@ class FolderController {
       } elseif ($type == "option3") { // Creating a file
         $content = ""; 
         $file_type = 4; 
-  
+        require_once __DIR__ . '/../Models/file_class.php';
         $new_file_id = file::create($name, $user_id, $parent_folder_id, $content, $file_type);
         if ($new_file_id) {
           header("Location:../Views/speech.php?id=$new_file_id");
@@ -51,8 +53,11 @@ class FolderController {
           // Perform action based on type
           $result = false;
           if ($item_type === 'folder') {
+            require_once __DIR__ . '/../Models/folder_class.php';
+
             $result = folder::moveToTrash($item_id);
           } elseif ($item_type === 'file') {
+            require_once __DIR__ . '/../Models/file_class.php';
             $result = file::moveToTrash($item_id);
           }
     

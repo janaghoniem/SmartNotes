@@ -250,7 +250,7 @@ $current_page = 'User dashboard';
                                     note.addEventListener('click', function () {
                                         const noteId = this.getAttribute('data-note-id');
                                         if (noteId) {
-                                            window.location.href = `../pages/Note.php?id=${noteId}`;
+                                            window.location.href = `../Views/Note.php?id=${noteId}`;
                                         } else {
                                             console.error("Note ID is null or undefined.");
                                         }

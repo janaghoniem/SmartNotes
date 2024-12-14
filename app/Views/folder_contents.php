@@ -163,7 +163,10 @@ $current_page = 'Folder Content';
                 <section class="bordered-content">
                     <h3 style="margin-bottom: 15px;">
                         <?php
+                        
                         $current_folder_id = $_GET['folder_id'] ?? 1;
+                        require_once __DIR__ . '/../Models/folder_class.php';
+
                         $current_folder = new folder($current_folder_id);
                         echo htmlspecialchars($current_folder->name);
                         ?>
@@ -185,7 +188,6 @@ $current_page = 'Folder Content';
                         
                         <div class="folders">
                             <?php
-                            include_once '../includes/folder_class.php';
                             include_once '../includes/session.php';
                             $user_id = $_SESSION['UserID'];
                             $current_folder_id = $_GET['folder_id'] ?? 1;
