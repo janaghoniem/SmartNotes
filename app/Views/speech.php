@@ -1,6 +1,6 @@
 <?php
 include '../includes/config.php';
-include '../includes/FileContent_class.php';
+include '../includes/FileContent.php';
 // include '../includes/user_sidebar.php'; 
 $current_page = 'word editor';
 include_once '../includes/session.php';

@@ -1,7 +1,7 @@
 <?php
 include '../config/Database.php';
 
-include '../includes/FileContent_class.php';
+include '../includes/FileContent.php';
 include_once '../includes/session.php';
 include_once '../Models/User.php';
 

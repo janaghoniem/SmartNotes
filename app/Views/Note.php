@@ -1,7 +1,7 @@
 <?php
 // include '../includes/user_sidebar.php';
-include '../includes/config.php';
-include_once '../includes/session.php';
+include '../config/Database.php';
+
 
 if (isset($_GET['id'])) {
     $_SESSION['file_id'] = intval($_GET['id']);

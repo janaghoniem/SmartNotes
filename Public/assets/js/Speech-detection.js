@@ -202,7 +202,7 @@ window.addEventListener("load", () => {
         console.log('Preparing to send transcribed content to server...');
         console.log('Content to save:', content);
 
-        fetch('../includes/FileContent_class.php', { // Ensure this path is correct
+        fetch('../../app/includes/FileContent.php', { // Ensure this path is correct
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
