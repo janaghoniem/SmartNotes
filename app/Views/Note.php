@@ -83,7 +83,7 @@ if ($folder_id !== null) {
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-//require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 // <?php
 
@@ -92,11 +92,11 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 // Initialize Logger
-//$logger = new Logger('gemini_logger');
-//$logger->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::DEBUG));
+$logger = new Logger('gemini_logger');
+$logger->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::DEBUG));
 
-// Initialize the HTTP client
-//$client = new Client();
+//Initialize the HTTP client
+$client = new Client();
 
 // Text to summarize
 $text = $content;
