@@ -1,0 +1,58 @@
+# Node modules
+/node/node_modules
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+.project
+.classpath
+.settings/
+.metadata/
+
+# Coverage directory used by testing frameworks
+coverage/
+
+# Compiled files
+*.o
+*.out
+
+# Minified files
+*.min.js
+*.min.css
+
+# Temporary files
+*.tmp
+*~
+*.swp
+
+# Output of various tools
+dist/
+build/
+bundles/
+
+# Composer dependencies
+/vendor/
+composer.lock
+
+# Secrets
+secrets/
+
+# Ignore Composer's global configuration file
+composer.phar
