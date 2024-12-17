@@ -28,5 +28,14 @@ class Note {
         $stmt->bind_param("siisi", $name, $user_id, $folder_id, $content, $file_type);
         return $stmt->execute() ? $this->db->insert_id : false;
     }
+
+    public function getFolderIdByFileId($file_id) {
+        $stmt = $this->db->prepare("SELECT folder_id FROM files WHERE id = ?");
+        $stmt->bind_param("i", $file_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc()['folder_id'] ?? null;
+    }
+    
 }
 ?>

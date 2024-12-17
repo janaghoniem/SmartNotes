@@ -1,56 +1,87 @@
 <?php
 // include '../includes/user_sidebar.php';
 include '../config/Database.php';
+require_once __DIR__ . '/../../app/Controllers/FileController.php';
 
 
-if (isset($_GET['id'])) {
-    $_SESSION['file_id'] = intval($_GET['id']);
-} else {
-    // Handle the case where no file_id is passed
-    $_SESSION['file_id'] = null; // or set a default value
-}
-//set current page to update sidebar status
+
+// if (isset($_GET['id'])) {
+//     $_SESSION['file_id'] = intval($_GET['id']);
+// } else {
+//     // Handle the case where no file_id is passed
+//     $_SESSION['file_id'] = null; // or set a default value
+// }
+// //set current page to update sidebar status
+// $current_page = 'My Note';
+// $file_id = isset($_GET['id']) ? intval($_GET['id']) : null;
+
+// if ($file_id !== null) {
+//   $sql = "SELECT content FROM files WHERE id=$file_id";
+//   $result = $conn->query($sql);
+
+//   if ($result->num_rows > 0) {
+//     while ($row = $result->fetch_assoc()) {
+//       $content = $row["content"];
+//     }
+//   } else {
+//     $content = "No content found.";
+//   }
+// } else {
+//   $content = "Invalid file ID.";
+// }
+// $folder_sql = "SELECT folder_id FROM files WHERE id = $file_id";
+// $folder_result = $conn->query($folder_sql);
+
+// if ($folder_result->num_rows > 0) {
+//   $folder_row = $folder_result->fetch_assoc();
+//   $folder_id = $folder_row['folder_id'];
+
+//   echo "Folder ID: " . $folder_id;
+// } else {
+//   echo "No folder found for the provided file ID.";
+// }
+
+//----------------------------------------------------------------------------------------------------
+
+
+$fileController = new FileController();
+
+// Set current page to update sidebar status
 $current_page = 'My Note';
+
+// Get file ID from the query parameter
 $file_id = isset($_GET['id']) ? intval($_GET['id']) : null;
+$_SESSION['file_id'] = $file_id;
 
+// Retrieve file content
 if ($file_id !== null) {
-  $sql = "SELECT content FROM files WHERE id=$file_id";
-  $result = $conn->query($sql);
-
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      $content = $row["content"];
+    $content = $fileController->getFileContent($file_id);
+    if (!$content) {
+        $content = "No content found.";
     }
-  } else {
-    $content = "No content found.";
-  }
 } else {
-  $content = "Invalid file ID.";
-}
-$folder_sql = "SELECT folder_id FROM files WHERE id = $file_id";
-$folder_result = $conn->query($folder_sql);
-
-if ($folder_result->num_rows > 0) {
-  $folder_row = $folder_result->fetch_assoc();
-  $folder_id = $folder_row['folder_id'];
-
-  echo "Folder ID: " . $folder_id;
-} else {
-  echo "No folder found for the provided file ID.";
+    $content = "Invalid file ID.";
 }
 
+// Retrieve folder ID
+$folder_id = $file_id !== null ? $fileController->getFolderId($file_id) : null;
 
+if ($folder_id !== null) {
+    echo "Folder ID: " . $folder_id;
+} else {
+    echo "No folder found for the provided file ID.";
+}
 
-
+//-----------------------------------------------------------------------------------------------------
 
 // Disable strict mode temporarily
-$conn->query("SET sql_mode = ''");
+//$conn->query("SET sql_mode = ''");
 
 
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require_once __DIR__ . '/../vendor/autoload.php';
+//require_once __DIR__ . '/../vendor/autoload.php';
 
 // <?php
 
@@ -59,11 +90,11 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 // Initialize Logger
-$logger = new Logger('gemini_logger');
-$logger->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::DEBUG));
+//$logger = new Logger('gemini_logger');
+//$logger->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::DEBUG));
 
 // Initialize the HTTP client
-$client = new Client();
+//$client = new Client();
 
 // Text to summarize
 $text = $content;
@@ -148,7 +179,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_qa'])) {
         $logger->error('Error in generating Q&A', ['message' => $e->getMessage()]);
     }
 }
+//------------------------------------------------------------------------------------------------------
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (isset($_POST['generate_summary'])) {
+      $summary = $fileController->generateSummary($text);
+  } elseif (isset($_POST['generate_mcqs'])) {
+      $mcqs = $fileController->generateMCQs($text);
+  } elseif (isset($_POST['generate_qa'])) {
+      $qa = $fileController->generateQA($text);
+  } elseif (isset($_POST['save_summary'])) {
+      $fileController->saveSummary($fileId, $_POST['summary']);
+      $message = "Summary saved successfully.";
+  }
+}
 
 
 ?>
@@ -191,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_qa'])) {
   <!-- <h1 class="text-center">Esm el folder w el note el mafto7a</h1> -->
   <div id="container-fluid">
     <div class="wrapper">
-      <?php include '../includes/sidebar.php'; ?>
+      <?php //include '../includes/sidebar.php'; ?>
       <div class="row come-in">
 
         <h1>Text Summarization Result</h1>
