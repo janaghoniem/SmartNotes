@@ -204,9 +204,9 @@ $current_page = 'User dashboard';
                             ini_set('display_errors', 1);
                             ini_set('display_startup_errors', 1);
                             error_reporting(E_ALL);
-                            
+
                             require_once __DIR__ . '/../Models/file_class.php';
-                            
+
                             $user_id = $_SESSION['UserID'];
 
                             $folder_id = isset($_GET['folder_id']) ? $_GET['folder_id'] : null;
@@ -274,7 +274,7 @@ $current_page = 'User dashboard';
                             <script src="../../public/assets/js/now-ui-dashboard.min.js?v=1.5.0"
                                 type="text/javascript"></script>
 
-                            <script src="../../public/assets/js/SearchandFilters.js"></script>
+                                <script src="../../public/assets/js/SearchandFilters.js"></script>
 
 
 

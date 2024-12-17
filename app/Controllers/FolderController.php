@@ -23,7 +23,7 @@ class FolderController {
           echo "ERROR!";
         }
       } elseif ($type == "option3") { // Creating a file
-        $content = ""; 
+        $content = "  "; 
         $file_type = 4; 
         require_once __DIR__ . '/../Models/file_class.php';
         $new_file_id = file::create($name, $user_id, $parent_folder_id, $content, $file_type);
@@ -64,7 +64,7 @@ class FolderController {
           // Check result and handle response
           if ($result) {
             ob_end_clean(); // Clear buffer
-            header("Location: ../pages/trash.php");
+            header("Location: ../Views/trash.php");
             exit();
           } else {
             echo "<script>alert('Error moving $item_type to trash.');</script>";

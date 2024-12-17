@@ -3,9 +3,6 @@ $con = new mysqli("localhost", "root", "", "smartnotes_db");
 if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
-ini_set('display_errors', 0);
-ini_set('display_startup_errors', 0);
-error_reporting(0);
 
 class trash {
     public $ID;
@@ -63,7 +60,22 @@ class trash {
             $user_id = $_SESSION['UserID']; // Retrieve the current user's ID from the session
     
             // Check if the item is a file or folder
-            if ($this->file_content!=NULL) {
+            if ($this->file_content==NULL) {
+                // Restore as a folder
+                $sql = "
+                    INSERT INTO folders (name, created_at, folder_id, user_id)
+                    SELECT 
+                        name, 
+                        NOW(), 
+                        $restore_folder_id AS folder_id, 
+                        $user_id AS user_id
+                    FROM 
+                        trash
+                    WHERE 
+                        ID = $this->ID;
+                ";
+            } else {
+                
                 // Restore as a file
                 $sql = "
                     INSERT INTO files (name, folder_id, user_id, content, created_at, file_type)
@@ -74,20 +86,6 @@ class trash {
                         file_content AS content,
                         NOW(),
                         1 AS file_type -- Adjust file_type based on your application logic
-                    FROM 
-                        trash
-                    WHERE 
-                        ID = $this->ID;
-                ";
-            } else {
-                // Restore as a folder
-                $sql = "
-                    INSERT INTO folders (name, created_at, folder_id, user_id)
-                    SELECT 
-                        name, 
-                        NOW(), 
-                        $restore_folder_id AS folder_id, 
-                        $user_id AS user_id
                     FROM 
                         trash
                     WHERE 

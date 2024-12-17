@@ -14,9 +14,9 @@ if (isset($_POST["submit"])) {
 }
 ob_start();
 
-// if (isset($_POST['item_id']) && isset($_POST['item_type'])) {
-//   FolderController::moveToTrash($_POST);
-// }
+if (isset($_POST['item_id']) && isset($_POST['item_type'])) {
+  FolderController::moveToTrash($_POST);
+}
 
 $user = new User($_SESSION['UserID']);
 if (!$user) {
