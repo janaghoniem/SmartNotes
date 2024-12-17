@@ -2,6 +2,8 @@
 // include '../includes/user_sidebar.php';
 include '../config/Database.php';
 require_once __DIR__ . '/../../app/Controllers/FileController.php';
+require_once __DIR__ . '/../../app/Controllers/GenContentController.php';
+
 
 
 
@@ -180,16 +182,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_qa'])) {
     }
 }
 //------------------------------------------------------------------------------------------------------
+$GenController= new FileGenController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['generate_summary'])) {
-      $summary = $fileController->generateSummary($text);
+      $summary = $GenController->generateSummary($text);
   } elseif (isset($_POST['generate_mcqs'])) {
-      $mcqs = $fileController->generateMCQs($text);
+      $mcqs = $GenController->generateMCQs($text);
   } elseif (isset($_POST['generate_qa'])) {
-      $qa = $fileController->generateQA($text);
+      $qa = $GenController->generateQA($text);
   } elseif (isset($_POST['save_summary'])) {
-      $fileController->saveSummary($fileId, $_POST['summary']);
+      $GenController->saveSummary($fileId, $_POST['summary']);
       $message = "Summary saved successfully.";
   }
 }

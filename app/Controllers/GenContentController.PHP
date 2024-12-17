@@ -1,20 +1,20 @@
 <?php
-require_once '../models/FileModel.php';
+require_once '../models/file_class.php';
 
 class FileGenController {
     private $fileModel;
 
-    public function __construct($db) {
-        $this->fileModel = new FileModel($db);
+    public function __construct() {
+        
     }
 
-    public function getFileContent($fileId) {
-        return $this->fileModel->getFileContentById($fileId);
-    }
+    // public function getFileContent($fileId) {
+    //     return $this->fileModel->getFileContentById($fileId);
+    // }
 
-    public function getFolderId($fileId) {
-        return $this->fileModel->getFolderIdByFileId($fileId);
-    }
+    // public function getFolderId($fileId) {
+    //     return $this->fileModel->getFolderIdByFileId($fileId);
+    // }
 
     public function saveSummary($fileId, $summary) {
         return $this->fileModel->saveSummary($fileId, $summary);
