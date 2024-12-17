@@ -1,0 +1,20 @@
+{
+    "name": "smartnotes/gemini",
+    "description": "smartnotes",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "^7.9",
+        "monolog/monolog": "^3.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Smartnotes\\Gemini\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Habiba Darwish",
+            "email": "habibadarwish2004@gmail.com"
+        }
+    ]
+}
