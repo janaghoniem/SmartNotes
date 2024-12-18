@@ -96,6 +96,7 @@ $current_page = 'Folder Content';
             border-bottom: 1px solid black;
 
         }
+
         .filter-buttons {
             display: flex;
             gap: 10px;
@@ -163,7 +164,7 @@ $current_page = 'Folder Content';
                 <section class="bordered-content">
                     <h3 style="margin-bottom: 15px;">
                         <?php
-                        
+
                         $current_folder_id = $_GET['folder_id'] ?? 1;
                         require_once __DIR__ . '/../Models/folder_class.php';
 
@@ -172,7 +173,7 @@ $current_page = 'Folder Content';
                         ?>
                     </h3>
                     <section class="recent-folders">
-                    <div class="filter-buttons">
+                        <div class="filter-buttons">
                             <button class="filter-btn" data-filter="today">Today</button>
                             <button class="filter-btn" data-filter="this week">This Week</button>
                             <button class="filter-btn" data-filter="this month">This Month</button>
@@ -185,14 +186,14 @@ $current_page = 'Folder Content';
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="folders">
                             <?php
                             include_once '../includes/session.php';
                             $user_id = $_SESSION['UserID'];
                             $current_folder_id = $_GET['folder_id'] ?? 1;
 
-                            $obj = folder::readByParent($user_id,$current_folder_id);
+                            $obj = folder::readByParent($user_id, $current_folder_id);
                             $colors = ['blue', 'yellow', 'red'];
                             if ($obj) {
                                 for ($j = 0; $j < count($obj); $j++) {
@@ -214,7 +215,7 @@ $current_page = 'Folder Content';
                                             <button class="popover-btn rename" data-folder-id="<?php echo $folderId; ?>">
                                                 Rename
                                             </button>
-                                            
+
                                             <!-- Delete Button -->
                                             <button class="popover-btn delete" data-item-id="<?php echo $folderId; ?>"
                                                 data-item-type="folder">
@@ -231,7 +232,7 @@ $current_page = 'Folder Content';
 
                         <br>
                         <div class="notes">
-                        
+
                             <?php
                             $user_id = $_SESSION['UserID'];
                             require_once __DIR__ . '/../Models/file_class.php';
@@ -254,7 +255,7 @@ $current_page = 'Folder Content';
                                             <div class="popover" style="z-index: 300000;">
                                                 <button class="popover-btn rename"
                                                     data-note-id="<?php echo $file['id']; ?>">Rename</button>
-                                                
+
                                                 <button class="popover-btn delete" data-item-id="<?php echo $file['id']; ?>"
                                                     data-item-type="file">Delete</button>
                                             </div>
@@ -271,8 +272,8 @@ $current_page = 'Folder Content';
                             <?php endif; ?>
                         </div>
                         <div id="no-results" style="display: none; text-align: center; color: gray;">
-                                        No results found.
-                                    </div>
+                            No results found.
+                        </div>
                     </section>
                 </section>
             </main>

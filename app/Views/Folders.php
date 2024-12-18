@@ -44,9 +44,11 @@ $current_page = 'Folders';
             background-color: #e0e0e0;
             color: #888;
         }
+
         .popover {
-    display: none; /* Hide initially */
-}
+            display: none;
+            /* Hide initially */
+        }
 
         .black-placeholder::placeholder {
             color: black !important;
@@ -167,7 +169,7 @@ $current_page = 'Folders';
                                             <button class="popover-btn rename" data-folder-id="<?php echo $folderId; ?>">
                                                 Rename
                                             </button>
-                                            
+
                                             <!-- Delete Button -->
                                             <button class="popover-btn delete" data-item-id="<?php echo $folderId; ?>"
                                                 data-item-type="folder">
@@ -182,8 +184,8 @@ $current_page = 'Folders';
                             ?>
                         </div>
                         <div id="no-results" style="display: none; text-align: center; color: gray;">
-                                        No results found.
-                                    </div>
+                            No results found.
+                        </div>
                     </section>
                 </section>
             </main>
@@ -199,178 +201,178 @@ $current_page = 'Folders';
     <script src="../../public/assets/js/plugins/bootstrap-notify.js"></script>
     <script src="../../public/assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('.filter-buttons .filter-btn');
-    const sortLinks = document.querySelectorAll('.dropdown-content a');
-    const foldersContainer = document.querySelector('.folders');
-    const folders = foldersContainer ? foldersContainer.querySelectorAll('.folder') : [];
-    const notesContainer = document.querySelector('.notes');
-    const notes = notesContainer ? notesContainer.querySelectorAll('.note') : [];
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterButtons = document.querySelectorAll('.filter-buttons .filter-btn');
+            const sortLinks = document.querySelectorAll('.dropdown-content a');
+            const foldersContainer = document.querySelector('.folders');
+            const folders = foldersContainer ? foldersContainer.querySelectorAll('.folder') : [];
+            const notesContainer = document.querySelector('.notes');
+            const notes = notesContainer ? notesContainer.querySelectorAll('.note') : [];
 
-    console.log('Filter Buttons:', filterButtons);
-    console.log('Sort Links:', sortLinks);
-    console.log('Folders:', folders);
-    console.log('Notes:', notes);
+            console.log('Filter Buttons:', filterButtons);
+            console.log('Sort Links:', sortLinks);
+            console.log('Folders:', folders);
+            console.log('Notes:', notes);
 
-    function sortElements(elements, sortBy) {
-        console.log('Sorting elements by:', sortBy);
-        let sortedElements = Array.from(elements);
-        sortedElements.sort((a, b) => {
-            console.log('Comparing:', a, b);
-            if (sortBy === 'name') {
-                return a.querySelector('p').textContent.localeCompare(b.querySelector('p').textContent);
-            } else if (sortBy === 'created') {
-                return new Date(a.getAttribute('data-created-at')) - new Date(b.getAttribute('data-created-at'));
-            } else if (sortBy === 'modified') {
-                // Assuming data-modified-at attribute is present
-                return new Date(a.getAttribute('data-modified-at')) - new Date(b.getAttribute('data-modified-at'));
+            function sortElements(elements, sortBy) {
+                console.log('Sorting elements by:', sortBy);
+                let sortedElements = Array.from(elements);
+                sortedElements.sort((a, b) => {
+                    console.log('Comparing:', a, b);
+                    if (sortBy === 'name') {
+                        return a.querySelector('p').textContent.localeCompare(b.querySelector('p').textContent);
+                    } else if (sortBy === 'created') {
+                        return new Date(a.getAttribute('data-created-at')) - new Date(b.getAttribute('data-created-at'));
+                    } else if (sortBy === 'modified') {
+                        // Assuming data-modified-at attribute is present
+                        return new Date(a.getAttribute('data-modified-at')) - new Date(b.getAttribute('data-modified-at'));
+                    }
+                });
+                console.log('Sorted elements:', sortedElements);
+                return sortedElements;
             }
-        });
-        console.log('Sorted elements:', sortedElements);
-        return sortedElements;
-    }
 
-    function applyFilterAndSort(filter = null, sortBy = null) {
-        console.log('Applying Filter:', filter, 'Sort By:', sortBy);
-        const today = new Date();
-        let startDate;
+            function applyFilterAndSort(filter = null, sortBy = null) {
+                console.log('Applying Filter:', filter, 'Sort By:', sortBy);
+                const today = new Date();
+                let startDate;
 
-        if (filter === 'today') {
-            startDate = new Date(today.setHours(0, 0, 0, 0));
-        } else if (filter === 'this week') {
-            const firstDayOfWeek = today.getDate() - today.getDay();
-            startDate = new Date(today.setDate(firstDayOfWeek));
-            startDate.setHours(0, 0, 0, 0);
-        } else if (filter === 'this month') {
-            startDate = new Date(today.getFullYear(), today.getMonth(), 1);
-            startDate.setHours(0, 0, 0, 0);
-        }
+                if (filter === 'today') {
+                    startDate = new Date(today.setHours(0, 0, 0, 0));
+                } else if (filter === 'this week') {
+                    const firstDayOfWeek = today.getDate() - today.getDay();
+                    startDate = new Date(today.setDate(firstDayOfWeek));
+                    startDate.setHours(0, 0, 0, 0);
+                } else if (filter === 'this month') {
+                    startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                    startDate.setHours(0, 0, 0, 0);
+                }
 
-        let filteredFolders = Array.from(folders);
-        let filteredNotes = Array.from(notes);
+                let filteredFolders = Array.from(folders);
+                let filteredNotes = Array.from(notes);
 
-        if (filter) {
-            filteredFolders = filteredFolders.filter(folder => new Date(folder.getAttribute('data-created-at')) >= startDate);
-            filteredNotes = filteredNotes.filter(note => new Date(note.getAttribute('data-created-at')) >= startDate);
-        }
+                if (filter) {
+                    filteredFolders = filteredFolders.filter(folder => new Date(folder.getAttribute('data-created-at')) >= startDate);
+                    filteredNotes = filteredNotes.filter(note => new Date(note.getAttribute('data-created-at')) >= startDate);
+                }
 
-        if (sortBy) {
-            filteredFolders = sortElements(filteredFolders, sortBy);
-            filteredNotes = sortElements(filteredNotes, sortBy);
-        }
+                if (sortBy) {
+                    filteredFolders = sortElements(filteredFolders, sortBy);
+                    filteredNotes = sortElements(filteredNotes, sortBy);
+                }
 
-        console.log('Filtered and Sorted Folders:', filteredFolders);
-        console.log('Filtered and Sorted Notes:', filteredNotes);
+                console.log('Filtered and Sorted Folders:', filteredFolders);
+                console.log('Filtered and Sorted Notes:', filteredNotes);
 
-        // Update folders container
-        foldersContainer.innerHTML = '';
-        filteredFolders.forEach(folder => foldersContainer.appendChild(folder));
+                // Update folders container
+                foldersContainer.innerHTML = '';
+                filteredFolders.forEach(folder => foldersContainer.appendChild(folder));
 
-        // Update notes container if it exists
-        if (notesContainer) {
-            notesContainer.innerHTML = '';
-            filteredNotes.forEach(note => notesContainer.appendChild(note));
-        }
-    }
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            console.log('Button Clicked:', this.textContent);
-            const isActive = this.classList.contains('active');
-
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-
-            if (isActive) {
-                applyFilterAndSort();
-            } else {
-                this.classList.add('active');
-                applyFilterAndSort(this.getAttribute('data-filter'));
+                // Update notes container if it exists
+                if (notesContainer) {
+                    notesContainer.innerHTML = '';
+                    filteredNotes.forEach(note => notesContainer.appendChild(note));
+                }
             }
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    console.log('Button Clicked:', this.textContent);
+                    const isActive = this.classList.contains('active');
+
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+
+                    if (isActive) {
+                        applyFilterAndSort();
+                    } else {
+                        this.classList.add('active');
+                        applyFilterAndSort(this.getAttribute('data-filter'));
+                    }
+                });
+            });
+
+            sortLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    console.log('Sort Link Clicked:', this.textContent);
+                    applyFilterAndSort(null, this.getAttribute('data-sort'));
+                });
+            });
         });
-    });
-
-    sortLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            console.log('Sort Link Clicked:', this.textContent);
-            applyFilterAndSort(null, this.getAttribute('data-sort'));
-        });
-    });
-});
-document.querySelectorAll('.popover').forEach(popover => {
-    popover.style.display = 'none'; // Hide initially
-});
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.querySelector('.input-group .form-control');
-    const clearSearchButton = document.getElementById('clear-search');
-    const clearFiltersButton = document.getElementById('clear-filters');
-    const folders = document.querySelectorAll('.folder');
-    const notes = document.querySelectorAll('.note');
-    const filterButtons = document.querySelectorAll('.filter-buttons .filter-btn');
-
-    // Search functionality
-    searchInput.addEventListener('input', function () {
-        const query = searchInput.value.toLowerCase();
-        let hasResults = false;
-
-        // Toggle clear search button visibility
-        clearSearchButton.style.display = query ? 'inline' : 'none';
-
-        // Filter folders
-        folders.forEach(folder => {
-            const folderName = folder.querySelector('p').textContent.toLowerCase();
-            if (folderName.includes(query)) {
-                folder.style.display = '';
-                hasResults = true;
-            } else {
-                folder.style.display = 'none';
-            }
+        document.querySelectorAll('.popover').forEach(popover => {
+            popover.style.display = 'none'; // Hide initially
         });
 
-        // Filter notes
-        notes.forEach(note => {
-            const noteName = note.querySelector('.note-name').textContent.toLowerCase();
-            const noteContent = note.querySelector('p').textContent.toLowerCase();
-            if (noteName.includes(query) || noteContent.includes(query)) {
-                note.style.display = '';
-                hasResults = true;
-            } else {
-                note.style.display = 'none';
-            }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.querySelector('.input-group .form-control');
+            const clearSearchButton = document.getElementById('clear-search');
+            const clearFiltersButton = document.getElementById('clear-filters');
+            const folders = document.querySelectorAll('.folder');
+            const notes = document.querySelectorAll('.note');
+            const filterButtons = document.querySelectorAll('.filter-buttons .filter-btn');
+
+            // Search functionality
+            searchInput.addEventListener('input', function () {
+                const query = searchInput.value.toLowerCase();
+                let hasResults = false;
+
+                // Toggle clear search button visibility
+                clearSearchButton.style.display = query ? 'inline' : 'none';
+
+                // Filter folders
+                folders.forEach(folder => {
+                    const folderName = folder.querySelector('p').textContent.toLowerCase();
+                    if (folderName.includes(query)) {
+                        folder.style.display = '';
+                        hasResults = true;
+                    } else {
+                        folder.style.display = 'none';
+                    }
+                });
+
+                // Filter notes
+                notes.forEach(note => {
+                    const noteName = note.querySelector('.note-name').textContent.toLowerCase();
+                    const noteContent = note.querySelector('p').textContent.toLowerCase();
+                    if (noteName.includes(query) || noteContent.includes(query)) {
+                        note.style.display = '';
+                        hasResults = true;
+                    } else {
+                        note.style.display = 'none';
+                    }
+                });
+
+                // Handle "No Results" message
+                document.getElementById('no-results').style.display = hasResults ? 'none' : '';
+            });
+
+            // Clear search functionality
+            clearSearchButton.addEventListener('click', function () {
+                searchInput.value = ''; // Clear the input
+                searchInput.dispatchEvent(new Event('input')); // Trigger the input event to reset results
+            });
+
+            // Clear filters functionality
+            clearFiltersButton.addEventListener('click', function () {
+                // Reset filter buttons
+                filterButtons.forEach(button => button.classList.remove('active'));
+
+                // Show all folders and notes
+                folders.forEach(folder => (folder.style.display = ''));
+                notes.forEach(note => (note.style.display = ''));
+
+                // Reset search input
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input')); // Trigger the input event
+
+                // Hide "No Results" message
+                document.getElementById('no-results').style.display = 'none';
+            });
         });
-
-        // Handle "No Results" message
-        document.getElementById('no-results').style.display = hasResults ? 'none' : '';
-    });
-
-    // Clear search functionality
-    clearSearchButton.addEventListener('click', function () {
-        searchInput.value = ''; // Clear the input
-        searchInput.dispatchEvent(new Event('input')); // Trigger the input event to reset results
-    });
-
-    // Clear filters functionality
-    clearFiltersButton.addEventListener('click', function () {
-        // Reset filter buttons
-        filterButtons.forEach(button => button.classList.remove('active'));
-
-        // Show all folders and notes
-        folders.forEach(folder => (folder.style.display = ''));
-        notes.forEach(note => (note.style.display = ''));
-
-        // Reset search input
-        searchInput.value = '';
-        searchInput.dispatchEvent(new Event('input')); // Trigger the input event
-
-        // Hide "No Results" message
-        document.getElementById('no-results').style.display = 'none';
-    });
-});
-</script>
+    </script>
 
 </body>
 
