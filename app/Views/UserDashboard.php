@@ -1,5 +1,4 @@
 <?php
-include_once '../includes/session.php';
 
 $current_page = 'User dashboard';
 
@@ -11,6 +10,8 @@ $current_page = 'User dashboard';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../public/assets/images/notes.png" rel="icon">
+
     <title>My Notes</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"

@@ -207,6 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
   <meta charset="UTF-8">
+  <link href="../../public/assets/images/notes.png" rel="icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../assets/css/user_style.css">
   <!-- <script src="../assets/js/sidebar.js"></script> -->

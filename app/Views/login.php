@@ -21,6 +21,7 @@ if (isset($_POST['email1'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartNotes</title>
+    <link href="../../public/assets/images/notes.png" rel="icon">
 
     <!-- Fonts and CSS Libraries -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -161,6 +162,7 @@ if (isset($_POST['email1'])) {
                         <div class="d-flex justify-content-between align-items-center mb-5">
                             <input name="signup" id="submit_button" class="btn login-btn" type="submit" value="Sign Up">
                         </div>
+                        <input type="text" name="user_type" value="2" style="hidden">
                     </form>
                     <p class="login-wrapper-footer-text">Already have an account? <a href="#" id="signin-toggle"
                             class="text-reset">Sign in here</a></p>

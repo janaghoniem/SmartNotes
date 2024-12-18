@@ -1,3 +1,3 @@
 ErrorDocument 404 /smartnotes/app/includes/page_not_found.php
-ErrorDocument 401 /smartnotes/app/includes/401.php
+ErrorDocument 401 /smartnotes/app/Public/401.php
 ErrorDocument 500 /smartnotes/app/includes/500.php

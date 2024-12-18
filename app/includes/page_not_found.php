@@ -1,10 +1,6 @@
 <?php
 require_once __DIR__ . '/../Models/User.php';
-session_start();	
-if(!$_SESSION['UserID']){
-    Header('Location: ../pages/login.php');
-}
-$user = new User($_SESSION['UserID']);
+require_once __DIR__ . '/../../app/includes/session.php';
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +28,7 @@ $user = new User($_SESSION['UserID']);
                         <img src="assets/images/404.png" class="img-fluid iq-error-img" alt="">
                         <h2 class="mb-0 mt-4">Oops! This Page is Not Found.</h2>
                         <p>The requested page does not exist.</p>
-                        <a class="btn btn-primary d-inline-flex align-items-center mt-3" href="<?php echo "/AI-Powered-Note-Taking-Website/pages/".$user->userType_obj->pages_array[0]->link_address; ?>">
+                        <a class="btn btn-primary d-inline-flex align-items-center mt-3" href="<?php echo "/smartnotes/app/Views/".$UserObject->userType_obj->pages_array[0]->link_address; ?>">
                             <i class="ri-home-4-line"></i>Back to Home
                         </a>
                     </div>

@@ -11,21 +11,30 @@ function isPageAllowed($currentPage, $allowedPages) {
     }
     return false;
 }
-
+$UserObject = null;
 $currentPage = basename($_SERVER['PHP_SELF']);
 
 if (!empty($_SESSION['UserID'])) {
-    $UserObject = new User($_SESSION["UserID"]);
+    if (!User::getInstance()) {
+        // If no instance is set, we need to set it using the user ID stored in the session
+        $user = User::getUserById($_SESSION['UserID']);
+        if ($user) {
+            User::setInstance($user); // Set the singleton instance
+        }
+    }
+
+    // Retrieve the singleton instance
+    $UserObject = User::getInstance();
 
     if (isPageAllowed($currentPage, $UserObject->userType_obj->pages_array)) {
         
     } else {
         http_response_code(401);
-        header("Location: /public/401.php");
+        header("Location: /smartnotes/Public/401.php");
         exit;
     }
 } else {
-    require_once __DIR__ . '/../app/Config/Database.php'; // Centralized DB connection
+    require_once __DIR__ . '/../Config/Database.php';
     $db = Database::getInstance()->getConnection();
 
     $stmt = $db->prepare("
@@ -49,7 +58,8 @@ if (!empty($_SESSION['UserID'])) {
 
     if (!$isAllowed) {
         http_response_code(401);
-        header("Location: /public/401.php");
+        //header("Location: /smartnotes/app/Views/login.php");
+        header("Location: /smartnotes/Public/401.php");
         exit;
     }
 

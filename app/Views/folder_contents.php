@@ -12,6 +12,7 @@ $current_page = 'Folder Content';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../public/assets/images/notes.png" rel="icon">
     <title>My Folders</title>
     <link rel="stylesheet" href="../../public/assets/css/user_style.css">
     <link rel="stylesheet" href="../../public/assets/css/folders.css">

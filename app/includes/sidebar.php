@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '../../Models/User.php';
-
+require_once __DIR__ . '/../../app/includes/session.php';
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -18,10 +18,6 @@ if (isset($_POST['item_id']) && isset($_POST['item_type'])) {
   FolderController::moveToTrash($_POST);
 }
 
-$user = new User($_SESSION['UserID']);
-if (!$user) {
-  header("Location: " . htmlspecialchars('./index.php'));
-}
 ?>
 
 
@@ -34,7 +30,7 @@ if (!$user) {
   <div class="sidebar-wrapper" id="sidebar-wrapper">
     <ul class="nav">
       <?php
-      if ($user->userType_obj->id == 2) {
+      if ($UserObject->userType_obj->id == 2) {
         echo "
           </li>
           <li class='' id='add-new'>
@@ -50,7 +46,7 @@ if (!$user) {
           </li>
           ";
       }
-      foreach ($user->userType_obj->pages_array as $page) {
+      foreach ($UserObject->userType_obj->pages_array as $page) {
         if ($page->visible == 1) {
           $friendly_name = htmlspecialchars($page->friendly_name, ENT_QUOTES, 'UTF-8');
           $url = htmlspecialchars($page->link_address, ENT_QUOTES, 'UTF-8');
@@ -66,9 +62,9 @@ if (!$user) {
           </li>";
         }
       }
-      ?>
+      ?> 
       <li class="active-pro">
-        <a href="./logout.php">
+        <a href="../Views/user_profile.php?action=logout">
           <i class="now-ui-icons sport_user-run" style="transform: scaleX(-1);"></i>
           <p>Log out</p>
         </a>

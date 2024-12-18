@@ -11,6 +11,8 @@ include_once '../includes/session.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../public/assets/images/notes.png" rel="icon">
+
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../../public/assets/css/user_style.css">
     <!-- <script src="../assets/js/Speech-detection.js" defer></script> -->
