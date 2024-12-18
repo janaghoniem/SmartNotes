@@ -56,3 +56,6 @@ secrets/
 
 # Ignore Composer's global configuration file
 composer.phar
+
+# Ignore .env files
+.env
