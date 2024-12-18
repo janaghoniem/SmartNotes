@@ -178,9 +178,7 @@ $current_page = 'User dashboard';
                                             <button class="popover-btn rename" data-folder-id="<?php echo $folderId; ?>">
                                                 Rename
                                             </button>
-                                            <button class="popover-btn move" data-folder-id="<?php echo $folderId; ?>">
-                                                Move
-                                            </button>
+                                            
                                             <!-- Delete Button -->
                                             <button class="popover-btn delete" data-item-id="<?php echo $folderId; ?>"
                                                 data-item-type="folder">
@@ -225,8 +223,7 @@ $current_page = 'User dashboard';
                                             <div class="popover" style="z-index: 300000;">
                                                 <button class="popover-btn rename"
                                                     data-note-id="<?php echo $file['id']; ?>">Rename</button>
-                                                <button class="popover-btn move"
-                                                    data-folder-id="<?php echo $folder_id; ?>">Move</button>
+                                                
                                                 <button class="popover-btn delete" data-item-id="<?php echo $file['id']; ?>"
                                                     data-item-type="file">Delete</button>
                                             </div>

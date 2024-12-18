@@ -167,9 +167,7 @@ $current_page = 'Folders';
                                             <button class="popover-btn rename" data-folder-id="<?php echo $folderId; ?>">
                                                 Rename
                                             </button>
-                                            <button class="popover-btn move" data-folder-id="<?php echo $folderId; ?>">
-                                                Move
-                                            </button>
+                                            
                                             <!-- Delete Button -->
                                             <button class="popover-btn delete" data-item-id="<?php echo $folderId; ?>"
                                                 data-item-type="folder">
