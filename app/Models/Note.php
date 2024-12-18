@@ -19,7 +19,12 @@ class Note {
     public function updateContent($file_id, $content) {
         $stmt = $this->db->prepare("UPDATE files SET content = ? WHERE id = ?");
         $stmt->bind_param("si", $content, $file_id);
-        return $stmt->execute();
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            error_log("Update failed: " . $stmt->error);
+            return false;
+        }
     }
 
     public function createFile($name, $user_id, $folder_id, $content, $file_type) {

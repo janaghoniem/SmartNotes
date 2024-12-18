@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
 }
 if (isset($_POST['edit']) && isset($file_id)) {
   // Redirect to the speech.php page with the file_id parameter
-  header("Location: ../pages/speech.php?id=". $file_id);
+  header("Location: ../Views/speech.php?id=". $file_id);
   
   exit(); // Ensure no further processing occurs
 }

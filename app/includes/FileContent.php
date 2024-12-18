@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL); // Enable error reporting
-ini_set('display_errors', 1); // Display errors
+error_reporting(E_ALL); 
+ini_set('display_errors', 1); 
 $con = new mysqli("localhost", "root", "", "smartnotes_db");
 
 // include '../includes/config.php';
@@ -12,7 +12,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . '../Models/file_class.php';
 
 require_once __DIR__ . '/../Controllers/FileController.php';
 
-session_start();
+@session_start();
 
 $fileController = new FileController();
 $user_id = $_SESSION['UserID'] ?? null;
@@ -43,4 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+
 ?>
+
+
+
+
+
+
+
+

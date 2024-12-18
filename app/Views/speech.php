@@ -1,9 +1,13 @@
 <?php
-include '../includes/config.php';
+include '../config/Database.php';
+
 include '../includes/FileContent.php';
-// include '../includes/user_sidebar.php'; 
-$current_page = 'word editor';
 include_once '../includes/session.php';
+include_once '../Models/User.php';
+$current_page = 'word editor';
+@session_start(); // Make sure session is started
+$user_id = $_SESSION['UserID'] ?? null;  // Ensure user_id is correctly fetched
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -122,7 +126,7 @@ include_once '../includes/session.php';
             </div>
             <input type="hidden" id="userid" value="<?php echo $user_id; ?>">
             <div id="content" contenteditable="true" spellcheck="false">
-                <p> <?php include '../includes/FileContent_class.php';
+                <p> <?php include '../includes/FileContent.php';
                 echo $content; ?></p>
             </div>
         </div>

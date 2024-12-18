@@ -53,25 +53,26 @@ fontSelect.addEventListener('change', function() {
     this.selectedIndex = 0; // Reset the select box
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const AddContentButton = document.getElementById('update-content');
     console.log("DOM fully loaded");
 
     if (AddContentButton) {
         console.log("AddContentButton found");
-        AddContentButton.addEventListener('click', function() {
+        AddContentButton.addEventListener('click', function () {
             console.log("AddContentButton clicked");
             const contentDiv = document.getElementById('content');
-            const content = contentDiv.innerText || contentDiv.textContent; // Extract the text content from the div
+            const contentToSave = contentDiv.innerText || contentDiv.textContent; // Use a different name
             const fileId = getQueryParam('id');
             console.log("File ID from URL:", fileId);
-            console.log('Content to save:', content);
-            addcontent(content);
+            console.log('Content to save:', contentToSave);
+            addcontent(contentToSave);
         });
     } else {
         console.error('AddContentButton not found');
     }
 });
+
 
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -81,30 +82,34 @@ function getQueryParam(param) {
 function addcontent(content) {
     const user_id = document.getElementById('userid').value;
     const fileId = getQueryParam('id');
-    const folder_id = 1; // Assuming a default folder ID, replace with actual value if needed
-    const file_type = 4; // Assuming a default file type, replace with actual value if needed
+    const folder_id = 1;
+    const file_type = 4;
 
-    console.log("File ID from URL:", fileId);
-    console.log('Content to save:', content);
+    console.log("File ID:", fileId);
+    console.log("Content to save:", content);
+    console.log("User ID:", user_id);
 
-    fetch('../includes/FileContent_class.php', { // Ensure this path is correct
+    fetch('../../app/includes/FileContent.php', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `content=${encodeURIComponent(content)}&user_id=${user_id}&id=${fileId}&folder_id=${folder_id}&file_type=${file_type}`
+        body: `content=${encodeURIComponent(content)}&user_id=${user_id}&id=${fileId}&folder_id=${folder_id}&file_type=${file_type}`,
     })
-    .then(response => response.text())
-    .then(data => {
-        console.log('Server response:', data);
-        if (data.includes("Record updated successfully") || data.includes("Record created successfully")) {
-            alert('Content saved successfully');
-        } else {
-            alert('Failed to save content. Response: ' + data);
-        }
-    })
-    .catch(error => {
-        console.error('Error saving content:', error);
-        alert('Error saving content: ' + error);
-    });
+        .then((response) => response.text())
+        .then((data) => {
+            console.log('Server Response:', data);
+            if (
+                data.includes('Record updated successfully') ||
+                data.includes('Record created successfully')
+            ) {
+                alert('Content saved successfully');
+            } else {
+                alert('Failed to save content. Response: ' + data);
+            }
+        })
+        .catch((error) => {
+            console.error('Error saving content:', error);
+            alert('Error saving content: ' + error);
+        });
 }
