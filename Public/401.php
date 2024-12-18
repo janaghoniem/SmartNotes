@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../app/includes/session.php';
-if($UserObject === null) {
+
+if($UserObject == null) {
   header("Location: /smartnotes/app/Views/login.php");
 }
 ?>

@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../app/includes/session.php';
 $current_page = 'Users Table List';
 
 $userController = new UserController();
-$users = $userController->listUsers($UserObject->userType_obj->id);
+$users = $userController->listUsers(2);
 ?>
 
 <!--

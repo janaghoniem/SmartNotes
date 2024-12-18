@@ -3,7 +3,8 @@ require_once __DIR__ . '/../Config/Database.php';
 include 'UserType.php';
 include 'UserActivity.php';
 
-class User {
+class User
+{
     private static $instance = null;
     public $id;
     public $username;
@@ -15,28 +16,33 @@ class User {
     public $userType_obj;
     public $created_at;
 
-    protected function __construct($user_id = null) {
+    protected function __construct($user_id = null)
+    {
         if ($user_id) {
             $this->loadUser($user_id);
         }
     }
 
     // Singleton pattern: Get the single instance of the User class
-    public static function getInstance() {
+    public static function getInstance()
+    {
         return self::$instance;
     }
 
     // Set the singleton instance explicitly
-    public static function setInstance($user) {
+    public static function setInstance($user)
+    {
         self::$instance = $user;
     }
 
     // Clear the singleton instance (used for logout)
-    public static function clearInstance() {
+    public static function clearInstance()
+    {
         self::$instance = null;
     }
 
-    private function loadUser($id) {
+    private function loadUser($id)
+    {
         $db = Database::getInstance()->getConnection();
         $sql = "SELECT * FROM users WHERE id = ?";
         $stmt = $db->prepare($sql);
@@ -60,7 +66,8 @@ class User {
         }
     }
 
-    public static function login($email, $password) {
+    public static function login($email, $password)
+    {
         $db = Database::getInstance()->getConnection();
         $sql = "SELECT * FROM users WHERE email = ?";
         $stmt = $db->prepare($sql);
@@ -70,7 +77,7 @@ class User {
 
         if ($row = $result->fetch_assoc()) {
             if (password_verify($password, $row['password'])) {
-                $user = new User($row['id']); 
+                $user = new User($row['id']);
 
                 if ($user->userType_obj->id == 2) {
                     UserActivity::startSession($user->id); // Start session tracking
@@ -79,20 +86,29 @@ class User {
                 // Set the Singleton instance
                 self::setInstance($user);
 
-                return $user; 
+                return $user;
             }
         }
         return null;
     }
 
-    public static function logout() {
-        // Clear any session-related data (if applicable)
-        UserActivity::endSession(self::getInstance()->id);
+    public static function logout()
+    {
+        // Destroy the session
+        session_start();
+        session_unset();
+        session_destroy();
+
+        if (self::$instance->userType_obj->id == 2) {
+            // Clear any session-related data (if applicable)
+            UserActivity::endSession(self::getInstance()->id);
+        }
         // Reset the singleton instance
         self::clearInstance();
     }
 
-    static function deleteUser($objUser) {
+    static function deleteUser($objUser)
+    {
         $db = Database::getInstance()->getConnection();
         $sql = "DELETE FROM users WHERE id = ?";
         $stmt = $db->prepare($sql);
@@ -100,7 +116,8 @@ class User {
         return $stmt->execute();
     }
 
-    static function insertUser($data) {
+    static function insertUser($data)
+    {
         $db = Database::getInstance()->getConnection();
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 
@@ -120,20 +137,29 @@ class User {
         return $stmt->execute();
     }
 
-    public function updateUser() {
+    public function updateUser()
+    {
         $db = Database::getInstance()->getConnection();
         $sql = "UPDATE users SET 
             username = ?, first_name = ?, last_name = ?, email = ?, password = ?, country = ?, user_type = ?
             WHERE id = ?";
         $stmt = $db->prepare($sql);
         $stmt->bind_param(
-            "ssssssii", 
-            $this->username, $this->first_name, $this->last_name, $this->email, $this->password, $this->country, $this->userType_obj->id, $this->id
+            "ssssssii",
+            $this->username,
+            $this->first_name,
+            $this->last_name,
+            $this->email,
+            $this->password,
+            $this->country,
+            $this->userType_obj->id,
+            $this->id
         );
         return $stmt->execute();
     }
 
-    static function getUserById($id) {
+    static function getUserById($id)
+    {
         $db = Database::getInstance()->getConnection();
         $sql = "SELECT * FROM users WHERE id = ?";
         $stmt = $db->prepare($sql);
@@ -147,7 +173,8 @@ class User {
         return null;
     }
 
-    static function getUserByEmail($email) {
+    static function getUserByEmail($email)
+    {
         $db = Database::getInstance()->getConnection();
         $sql = "SELECT * FROM users WHERE email = ?";
         $stmt = $db->prepare($sql);
@@ -164,8 +191,10 @@ class User {
 
 // Factory Method Pattern: UserFactory class to create users based on user type
 
-class UserFactory {
-    public static function createUser($userData) {
+class UserFactory
+{
+    public static function createUser($userData)
+    {
         if ($userData['user_type'] == 1) {
             return new AdminUser($userData); // Create an Admin User
         } else {
@@ -174,7 +203,8 @@ class UserFactory {
     }
 
     // Static method to get all users based on type
-    public static function getAllUsers($type = 2) {
+    public static function getAllUsers($type = 2)
+    {
         $sql = "SELECT * FROM users WHERE user_type = ?";
         $db = Database::getInstance()->getConnection();
         $stmt = $db->prepare($sql);
@@ -192,7 +222,8 @@ class UserFactory {
     }
 
     // Static method to get a user by ID
-    public static function getUserById($id) {
+    public static function getUserById($id)
+    {
         $sql = "SELECT * FROM users WHERE id = ?";
         $db = Database::getInstance()->getConnection();
         $stmt = $db->prepare($sql);
@@ -209,8 +240,10 @@ class UserFactory {
     }
 }
 
-class AdminUser extends User {
-    public function __construct($userData) {
+class AdminUser extends User
+{
+    public function __construct($userData)
+    {
         // Check if the user already exists by email or ID
         $existingUser = isset($userData['id']) ? self::getUserById($userData['id']) : self::getUserByEmail($userData['email']);
 
@@ -232,8 +265,10 @@ class AdminUser extends User {
     }
 }
 
-class RegularUser extends User {
-    public function __construct($userData) {
+class RegularUser extends User
+{
+    public function __construct($userData)
+    {
         // Check if the user already exists by email or ID
         $existingUser = isset($userData['id']) ? self::getUserById($userData['id']) : self::getUserByEmail($userData['email']);
 

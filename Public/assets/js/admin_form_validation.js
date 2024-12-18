@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const checkUsernameEmailExists = (input) => {
         return new Promise((resolve) => {
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", "../pages/check_user_email.php", true); // Ensure the path is correct
+            xhr.open("POST", "../../app/includes/check_user_email.php", true); // Ensure the path is correct
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {

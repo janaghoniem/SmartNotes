@@ -64,7 +64,7 @@ if (isset($_POST['item_id']) && isset($_POST['item_type'])) {
       }
       ?> 
       <li class="active-pro">
-        <a href="../Views/user_profile.php?action=logout">
+        <a href="" id="logout-btn-sidebar">
           <i class="now-ui-icons sport_user-run" style="transform: scaleX(-1);"></i>
           <p>Log out</p>
         </a>
@@ -157,3 +157,20 @@ if (isset($_POST['item_id']) && isset($_POST['item_type'])) {
     <p id="restrictionMessage"></p>
   </div>
 </div>
+
+<script>
+  document.getElementById('logout-btn-sidebar').addEventListener('click', function() {
+    if (confirm('Are you sure you want to log out?')) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../../public/includes/account_action.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert('Logged out successfully');
+                window.location.href = 'login.php'; // Redirect to login page
+            }
+        };
+        xhr.send('action=logout');
+    }
+});
+</script>

@@ -162,7 +162,7 @@ if (isset($_POST['email1'])) {
                         <div class="d-flex justify-content-between align-items-center mb-5">
                             <input name="signup" id="submit_button" class="btn login-btn" type="submit" value="Sign Up">
                         </div>
-                        <input type="text" name="user_type" value="2" style="hidden">
+                        <input type="hidden" name="user_type" value="2">
                     </form>
                     <p class="login-wrapper-footer-text">Already have an account? <a href="#" id="signin-toggle"
                             class="text-reset">Sign in here</a></p>

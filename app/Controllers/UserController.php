@@ -42,8 +42,8 @@ class UserController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
                 'username' => htmlspecialchars(trim($_POST['username'])),
-                'first_name' => htmlspecialchars(trim($_POST['first_name'])),
-                'last_name' => htmlspecialchars(trim($_POST['last_name'])),
+                'first_name' => htmlspecialchars(trim($_POST['firstname'])),
+                'last_name' => htmlspecialchars(trim($_POST['lastname'])),
                 'email' => htmlspecialchars(trim($_POST['email'])),
                 'password' => htmlspecialchars(trim($_POST['password'])),
                 'country' => htmlspecialchars(trim($_POST['country'])),
@@ -52,10 +52,8 @@ class UserController
 
             $user = UserFactory::createUser($data);
 
-            if ($user) {
+            if ($user && $data['user_type'] == 2) {
                 header("Location: /smartnotes/app/Views/Login.php");
-            } else {
-                return "Registration failed. Email might already be in use.";
             }
         }
     }
@@ -83,6 +81,7 @@ class UserController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user = User::getInstance();
 
+            $user->id = htmlspecialchars(trim($_POST['user_id']));
             $user->username = htmlspecialchars(trim($_POST['username']));
             $user->first_name = htmlspecialchars(trim($_POST['firstname']));
             $user->last_name = htmlspecialchars(trim($_POST['lastname']));
@@ -103,11 +102,6 @@ class UserController
     // Logs out the user
     public function logout()
     {
-        // Destroy the session
-        session_start();
-        session_unset();
-        session_destroy();
-
         // Reset the Singleton instance
         User::logout();
 

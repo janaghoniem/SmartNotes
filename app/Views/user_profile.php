@@ -34,17 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['question_id']) && isse
   }
 }
 
-if (isset($_GET['action']) && !empty($_GET['action'])) {
-  switch ($_GET['action']) {
-    case 'logout':
-      $userController->logout();
-      break;
-    case 'deactivate':
-      $userController->deleteUser($UserObject->id);
-      break;
-  }
-}
-
 // Render the form with current user data and survey questions
 $questions = $surveyController->getSurveyQuestions();
 $answers = $surveyController->getUserAnswers($UserObject->id);
