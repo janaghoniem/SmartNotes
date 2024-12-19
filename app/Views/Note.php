@@ -44,7 +44,7 @@ require_once __DIR__ . '/../../app/Controllers/GenContentController.php';
 // }
 
 //----------------------------------------------------------------------------------------------------
-
+@session_start();
 
 $fileController = new FileController();
 
@@ -74,6 +74,8 @@ if ($folder_id !== null) {
   echo "No folder found for the provided file ID.";
 }
 
+$user_id = $_SESSION['UserID'];
+echo $user_id;
 //-----------------------------------------------------------------------------------------------------
 
 // Disable strict mode temporarily
@@ -105,32 +107,32 @@ $_SESSION['text'] = $text;
 $summary = "";
 
 // Handle the form submission for generating the summary
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
-  // Construct the prompt for summarization
-  $prompt = "summarize the following text: " . $text;
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
+//   // Construct the prompt for summarization
+//   $prompt = "summarize the following text: " . $text;
 
-  try {
-    // Make the API request to the Node.js service
-    $response = $client->request('POST', 'http://localhost:3000/summarize', [
-      'json' => [
-        'prompt' => $prompt
-      ]
-    ]);
-    $data = json_decode($response->getBody(), true);
-    //echo json_encode($data); 
-    // Output the summary
-    $summary = $data['summary'] ?? 'No summary available';
-  } catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-    $logger->error('Error in summarization', ['message' => $e->getMessage()]);
-  }
-}
-if (isset($_POST['edit']) && isset($file_id)) {
-  // Redirect to the speech.php page with the file_id parameter
-  header("Location: ../Views/speech.php?id=" . $file_id);
+//   try {
+//     // Make the API request to the Node.js service
+//     $response = $client->request('POST', 'http://localhost:3000/summarize', [
+//       'json' => [
+//         'prompt' => $prompt
+//       ]
+//     ]);
+//     $data = json_decode($response->getBody(), true);
+//     //echo json_encode($data); 
+//     // Output the summary
+//     $summary = $data['summary'] ?? 'No summary available';
+//   } catch (Exception $e) {
+//     echo "Error: " . $e->getMessage();
+//     $logger->error('Error in summarization', ['message' => $e->getMessage()]);
+//   }
+// }
+// if (isset($_POST['edit']) && isset($file_id)) {
+//   // Redirect to the speech.php page with the file_id parameter
+//   header("Location: ../Views/speech.php?id=" . $file_id);
 
-  exit(); // Ensure no further processing occurs
-}
+//   exit(); // Ensure no further processing occurs
+// }
 
 
 //mcq and flashcards
@@ -140,63 +142,85 @@ $mcq = "";
 $qa = "";
 
 // Handle the form submission for generating multiple-choice questions
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_mcq'])) {
-  $mcq_prompt = "Generate many multiple-choice questions and their answers based on the following text: " . $text;
-  try {
-    $response = $client->request('POST', 'http://localhost:3000/summarize', [
-      'json' => [
-        'prompt' => $mcq_prompt
-      ]
-    ]);
-    $data = json_decode($response->getBody(), true);
-    $mcq = $data['summary'] ?? 'No multiple-choice questions available';
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_mcq'])) {
+//   $mcq_prompt = "Generate many multiple-choice questions and their answers based on the following text: " . $text;
+//   try {
+//     $response = $client->request('POST', 'http://localhost:3000/summarize', [
+//       'json' => [
+//         'prompt' => $mcq_prompt
+//       ]
+//     ]);
+//     $data = json_decode($response->getBody(), true);
+//     $mcq = $data['summary'] ?? 'No multiple-choice questions available';
 
-    // Store the MCQs in the session
-    $_SESSION['mcq'] = $mcq;
-    var_dump($_SESSION['mcq']); // Debug to check the data being stored
-    header('Location: mcqquiz.php');
-  } catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-    $logger->error('Error in generating MCQs', ['message' => $e->getMessage()]);
-  }
-}
+//     // Store the MCQs in the session
+//     $_SESSION['mcq'] = $mcq;
+//     var_dump($_SESSION['mcq']); // Debug to check the data being stored
+//     header('Location: mcqquiz.php');
+//   } catch (Exception $e) {
+//     echo "Error: " . $e->getMessage();
+//     $logger->error('Error in generating MCQs', ['message' => $e->getMessage()]);
+//   }
+// }
 
 // Handle the form submission for generating questions and answers
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_qa'])) {
-  $qa_prompt = "Generate questions and answers from the following text: " . $text . "\nPlease format the output as follows: \nQuestion 1: <question text>\nAnswer 1: <answer text>\nQuestion 2: <question text>\nAnswer 2: <answer text>";
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_qa'])) {
+//   $qa_prompt = "Generate questions and answers from the following text: " . $text . "\nPlease format the output as follows: \nQuestion 1: <question text>\nAnswer 1: <answer text>\nQuestion 2: <question text>\nAnswer 2: <answer text>";
 
-  try {
-    $response = $client->request('POST', 'http://localhost:3000/summarize', [
-      'json' => [
-        'prompt' => $qa_prompt
-      ]
-    ]);
-    $data = json_decode($response->getBody(), true);
-    $qa = $data['summary'] ?? 'No questions and answers available';
-    $_SESSION['qa'] = $qa;
-    var_dump($_SESSION['qa']); // Debug to check the data being stored
-    header('Location: NEWflashcards.php');
-  } catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-    $logger->error('Error in generating Q&A', ['message' => $e->getMessage()]);
-  }
-}
+//   try {
+//     $response = $client->request('POST', 'http://localhost:3000/summarize', [
+//       'json' => [
+//         'prompt' => $qa_prompt
+//       ]
+//     ]);
+//     $data = json_decode($response->getBody(), true);
+//     $qa = $data['summary'] ?? 'No questions and answers available';
+//     $_SESSION['qa'] = $qa;
+//     var_dump($_SESSION['qa']); // Debug to check the data being stored
+//     header('Location: NEWflashcards.php');
+//   } catch (Exception $e) {
+//     echo "Error: " . $e->getMessage();
+//     $logger->error('Error in generating Q&A', ['message' => $e->getMessage()]);
+//   }
+// }
 //------------------------------------------------------------------------------------------------------
 $GenController = new FileGenController();
 
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//   if (isset($_POST['generate_summary'])) {
+//       $summary = $GenController->generateSummary($text);
+//   } elseif (isset($_POST['generate_mcqs'])) {
+//       $mcqs = $GenController->generateMCQs($text);
+//   } elseif (isset($_POST['generate_qa'])) {
+//       $qa = $GenController->generateQA($text);
+//   } elseif (isset($_POST['save_summary'])) {
+//       $GenController->saveSummary($fileId, $_POST['summary']);
+//       $message = "Summary saved successfully.";
+//   }
+// }
+$message = '';
+
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['save']))) {
+
+//   $message = $GenController->save();
+// }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if (isset($_POST['generate_summary'])) {
-    $summary = $GenController->generateSummary($text);
-  } elseif (isset($_POST['generate_mcqs'])) {
-    $mcqs = $GenController->generateMCQs($text);
+  if (isset($_POST['save'])) {
+      $message = $GenController->save();
+  } elseif (isset($_POST['generate'])) {
+      $summary = $GenController->generateSummary($text);
+  } elseif (isset($_POST['generate_mcq'])) {
+      $GenController->generateMCQ($text);
   } elseif (isset($_POST['generate_qa'])) {
-    $qa = $GenController->generateQA($text);
-  } elseif (isset($_POST['save_summary'])) {
-    $GenController->saveSummary($fileId, $_POST['summary']);
-    $message = "Summary saved successfully.";
+      $GenController->generateQA($text);
+  } elseif (isset($_POST['edit']) && isset($_POST['file_id'])) {
+      $file_id = htmlspecialchars($_POST['file_id']);
+      header("Location: ../Views/speech.php?id=" . $file_id);
+      exit();
   }
 }
-
 
 ?>
 
@@ -247,20 +271,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <p><strong>Original Text:</strong> <?= htmlspecialchars($text) ?></p>
 
-          <!-- Form with Generate button -->
-          <form method="POST" id="generateForm">
-            <button type="submit" name="generate">Generate Summary</button>
+        <!-- Form with Generate button -->
+        <form method="POST" id="generateForm" action="">
+          <button type="submit" name="generate">Generate Summary</button>
+        </form>
+
+        <?php if (!empty($summary)): ?>
+          <p><strong>Summary:</strong> <?= htmlspecialchars($summary) ?></p>
+
+          <!-- Feedback Message -->
+          <?= $message ?>
+          <!-- Save button with an AJAX submit -->
+          <form method="POST" id="saveForm" action="">
+            <input type="hidden" name="name" value="Habibaazzz Summary">
+            <input type="hidden" name="user_id" value="<?= htmlspecialchars($user_id) ?>">
+            <input type="hidden" name="folder_id" value="<?= htmlspecialchars($folder_id) ?>">
+            <input type="hidden" name="content" value='<?= htmlspecialchars(json_encode(["S" => $summary])) ?>'>
+            <input type="hidden" name="file_type" value="2">
+            <button type="submit" name="save" id="save">Save Summary</button>
           </form>
 
-          <?php if (!empty($summary)): ?>
-            <p><strong>Summary:</strong> <?= htmlspecialchars($summary) ?></p>
+          <!-- <?php //if (!empty($summary)): ?>
+            <p><strong>Summary:</strong> <?php //htmlspecialchars($summary) ?></p>
 
-            <!-- Save button with an AJAX submit -->
             <form method="POST" id="saveForm">
-              <button type="submit" name="save" id="save" data-summary="<?= htmlspecialchars($summary) ?>">Save
+              <button type="submit" name="save" id="save" data-summary="<?php //htmlspecialchars($summary) ?>">Save
                 Summary</button>
             </form>
-          <?php endif; ?>
+          <?php //endif; ?>
+        <form method="POST" id="editForm" action="">
+          <button type="submit" name="edit">Edit</button>
+        </form> -->
+
+
 
           <form method="POST" id="editForm">
             <button type="submit" name="edit">Edit</button>
@@ -276,42 +319,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" name="generate_mcq">Generate MCQs</button>
     </form> -->
 
-          <form action="" method="POST" id="generateMCQForm">
+          <!-- <form action="" method="POST" id="generateMCQForm">
 
-            <input type="hidden" name="file_id" value="<?= isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
-            <input type="hidden" name="mcq" value="<?= htmlspecialchars($mcq) ?>">
-            <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
+            <input type="hidden" name="file_id" value="<? //isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
+            <input type="hidden" name="mcq" value="<?// htmlspecialchars($mcq) ?>">
+            <input type="hidden" name="text" value="<?// htmlspecialchars($text) ?>">
 
             <button type="submit" name="generate_mcq">Generate MCQs2</button>
-          </form>
+          </form> -->
 
           <!-- Display MCQs -->
-          <?php if (!empty($mcq)): ?>
+          <!-- <?php // if (!empty($mcq)): ?>
             <p><strong>Multiple-Choice Questions:</strong></p>
-            <pre><?= htmlspecialchars($mcq) ?></pre>
-          <?php endif; ?>
+            <pre><?// htmlspecialchars($mcq) ?></pre>
+          <?php //endif; ?> -->
 
           <!-- Form for Generating Q&A -->
-
+<!-- 
           <form action="" method="POST" id="generateQnA">
-            <input type="hidden" name="file_id" value="<?= isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
-            <input type="hidden" name="qa" value="<?= htmlspecialchars($qa) ?>">
-            <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
+            <input type="hidden" name="file_id" value="<?// isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
+            <input type="hidden" name="qa" value="<?// htmlspecialchars($qa) ?>">
+            <input type="hidden" name="text" value="<?// htmlspecialchars($text) ?>">
 
 
             <button type="submit" name="generate_qa">Generate QnA2</button>
-          </form>
+          </form> -->
 
           <!-- Display Q&A -->
-          <?php if (!empty($qa)):
-            var_dump($qa);
-            ?>
-
+          <!-- <?php // if (!empty($qa)):
+            //var_dump($qa);
+            ?> -->
+<!-- 
             <p><strong>Questions and Answers:</strong></p>
-            <pre><?= htmlspecialchars($qa) ?></pre>
+            <pre><?// htmlspecialchars($qa) ?></pre> -->
+<!-- 
+          <?php// endif; ?>
+        </div> -->
+        <!-- Form for Generating MCQs -->
+        <!-- <form method="POST" id="generateMCQForm">
+        <button type="submit" name="generate_mcq">Generate MCQs</button>
+    </form> -->
 
-          <?php endif; ?>
-        </div>
+        <form action="" method="POST" id="generateMCQForm" action="">
+
+          <input type="hidden" name="file_id" value="<?= isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
+          <input type="hidden" name="mcq" value="<?= htmlspecialchars($mcq) ?>">
+          <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
+
+          <button type="submit" name="generate_mcq">Generate MCQs2</button>
+        </form>
+
+        <!-- Display MCQs -->
+        <?php if (!empty($mcq)): ?>
+          <p><strong>Multiple-Choice Questions:</strong></p>
+          <pre><?= htmlspecialchars($mcq) ?></pre>
+        <?php endif; ?>
+
+        <!-- Form for Generating Q&A -->
+
+        <form action="" method="POST" id="generateQnA" action="">
+          <input type="hidden" name="file_id" value="<?= isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
+          <input type="hidden" name="qa" value="<?= htmlspecialchars($qa) ?>">
+          <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
+
+
+          <button type="submit" name="generate_qa">Generate QnA2</button>
+        </form>
+
+        <!-- Display Q&A -->
+        <?php if (!empty($qa)):
+          var_dump($qa);
+          ?>
+
+          <p><strong>Questions and Answers:</strong></p>
+          <pre><?= htmlspecialchars($qa) ?></pre>
+
+        <?php endif; ?>
       </div>
     </div>
 
@@ -336,40 +419,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   var sessionUserID = <?php echo json_encode($_SESSION['UserID']); ?>;
   var ID = sessionUserID;
   var folderId = <?php echo json_encode($folder_id); ?>;
-  // Prevent form submission and handle the save button logic
-  $('#saveForm').on('submit', function (event) {
-    event.preventDefault(); // Prevent the form from submitting normally
-
-    // Get the summary from the button data
-    var summary = $('#save').data('summary');
-    var jsonSummary = JSON.stringify({ S: summary });
-
-    // Prepare the data for AJAX
-    var postData = {
-      name: 'Habibaazzz Summary',
-      user_id: ID,  // Example: replace with actual user ID
-      folder_id: folderId,  // Example: replace with actual folder ID
-      content: jsonSummary,
-      created_at: new Date().toISOString(),
-      file_type: 2  // Assuming 2 corresponds to "Summary"
-    };
-
-    // Send an AJAX request to save_file.php
-    $.ajax({
-      url: 'sava_db_Q&A.php',
-      method: 'POST',
-      data: postData,  // Send form data
-      success: function (response) {
-        // Display the message from PHP
-        $('#message').html(response);
-        //console.log('API Response:', response);
-      },
-      error: function (xhr, status, error) {
-        $('#message').html('Error: ' + error);
-      }
-    });
-  });
 </script>
 
+<?php endif; ?>
 
 </html>
