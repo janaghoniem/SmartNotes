@@ -57,21 +57,21 @@ $_SESSION['file_id'] = $file_id;
 
 // Retrieve file content
 if ($file_id !== null) {
-    $content = $fileController->getFileContent($file_id);
-    if (!$content) {
-        $content = "No content found.";
-    }
+  $content = $fileController->getFileContent($file_id);
+  if (!$content) {
+    $content = "No content found.";
+  }
 } else {
-    $content = "Invalid file ID.";
+  $content = "Invalid file ID.";
 }
 
 // Retrieve folder ID
 $folder_id = $file_id !== null ? $fileController->getFolderId($file_id) : null;
 
 if ($folder_id !== null) {
-    echo "Folder ID: " . $folder_id;
+  echo "Folder ID: " . $folder_id;
 } else {
-    echo "No folder found for the provided file ID.";
+  echo "No folder found for the provided file ID.";
 }
 
 //-----------------------------------------------------------------------------------------------------
@@ -127,8 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
 }
 if (isset($_POST['edit']) && isset($file_id)) {
   // Redirect to the speech.php page with the file_id parameter
-  header("Location: ../Views/speech.php?id=". $file_id);
-  
+  header("Location: ../Views/speech.php?id=" . $file_id);
+
   exit(); // Ensure no further processing occurs
 }
 
@@ -143,57 +143,57 @@ $qa = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_mcq'])) {
   $mcq_prompt = "Generate many multiple-choice questions and their answers based on the following text: " . $text;
   try {
-      $response = $client->request('POST', 'http://localhost:3000/summarize', [
-          'json' => [
-              'prompt' => $mcq_prompt
-          ]
-      ]);
-      $data = json_decode($response->getBody(), true);
-      $mcq = $data['summary'] ?? 'No multiple-choice questions available';
-      
-      // Store the MCQs in the session
-      $_SESSION['mcq'] = $mcq;
-      var_dump($_SESSION['mcq']); // Debug to check the data being stored
-      header('Location: mcqquiz.php');
+    $response = $client->request('POST', 'http://localhost:3000/summarize', [
+      'json' => [
+        'prompt' => $mcq_prompt
+      ]
+    ]);
+    $data = json_decode($response->getBody(), true);
+    $mcq = $data['summary'] ?? 'No multiple-choice questions available';
+
+    // Store the MCQs in the session
+    $_SESSION['mcq'] = $mcq;
+    var_dump($_SESSION['mcq']); // Debug to check the data being stored
+    header('Location: mcqquiz.php');
   } catch (Exception $e) {
-      echo "Error: " . $e->getMessage();
-      $logger->error('Error in generating MCQs', ['message' => $e->getMessage()]);
+    echo "Error: " . $e->getMessage();
+    $logger->error('Error in generating MCQs', ['message' => $e->getMessage()]);
   }
 }
 
 // Handle the form submission for generating questions and answers
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_qa'])) {
-    $qa_prompt = "Generate questions and answers from the following text: " . $text . "\nPlease format the output as follows: \nQuestion 1: <question text>\nAnswer 1: <answer text>\nQuestion 2: <question text>\nAnswer 2: <answer text>";
+  $qa_prompt = "Generate questions and answers from the following text: " . $text . "\nPlease format the output as follows: \nQuestion 1: <question text>\nAnswer 1: <answer text>\nQuestion 2: <question text>\nAnswer 2: <answer text>";
 
-    try {
-        $response = $client->request('POST', 'http://localhost:3000/summarize', [
-            'json' => [
-                'prompt' => $qa_prompt
-            ]
-        ]);
-        $data = json_decode($response->getBody(), true);
-        $qa = $data['summary'] ?? 'No questions and answers available';
-        $_SESSION['qa'] = $qa;
-        var_dump($_SESSION['qa']); // Debug to check the data being stored
-        header('Location: NEWflashcards.php');
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-        $logger->error('Error in generating Q&A', ['message' => $e->getMessage()]);
-    }
+  try {
+    $response = $client->request('POST', 'http://localhost:3000/summarize', [
+      'json' => [
+        'prompt' => $qa_prompt
+      ]
+    ]);
+    $data = json_decode($response->getBody(), true);
+    $qa = $data['summary'] ?? 'No questions and answers available';
+    $_SESSION['qa'] = $qa;
+    var_dump($_SESSION['qa']); // Debug to check the data being stored
+    header('Location: NEWflashcards.php');
+  } catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+    $logger->error('Error in generating Q&A', ['message' => $e->getMessage()]);
+  }
 }
 //------------------------------------------------------------------------------------------------------
-$GenController= new FileGenController();
+$GenController = new FileGenController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['generate_summary'])) {
-      $summary = $GenController->generateSummary($text);
+    $summary = $GenController->generateSummary($text);
   } elseif (isset($_POST['generate_mcqs'])) {
-      $mcqs = $GenController->generateMCQs($text);
+    $mcqs = $GenController->generateMCQs($text);
   } elseif (isset($_POST['generate_qa'])) {
-      $qa = $GenController->generateQA($text);
+    $qa = $GenController->generateQA($text);
   } elseif (isset($_POST['save_summary'])) {
-      $GenController->saveSummary($fileId, $_POST['summary']);
-      $message = "Summary saved successfully.";
+    $GenController->saveSummary($fileId, $_POST['summary']);
+    $message = "Summary saved successfully.";
   }
 }
 
@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script src="../assets/js/Note.js"></script>
   <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.css'>
   <!-- <link rel="stylesheet" href="./style.css"> -->
-  <link rel="stylesheet" href="../assets/css/Note.css">
+  <link rel="stylesheet" href="../../public/assets/css/Note.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet">
@@ -226,10 +226,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <!-- CSS Files -->
-  <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="../assets/css/now-ui-dashboard.css" rel="stylesheet" />
-  <link href="../assets/css/demo.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../assets/css/user_style.css">
+  <link href="../../public/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../../public/assets/css/now-ui-dashboard.css" rel="stylesheet" />
+  <link href="../../public/assets/css/demo.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../public/assets/css/user_style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <title>Document</title>
 </head>
@@ -239,82 +239,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- <h1 class="text-center">Esm el folder w el note el mafto7a</h1> -->
   <div id="container-fluid">
     <div class="wrapper">
-      <?php //include '../includes/sidebar.php'; ?>
-      <div class="row come-in">
+      <?php include '../includes/sidebar.php'; ?>
+      <div class="Summary-container">
+        <div class="row come-in">
 
-        <h1>Text Summarization Result</h1>
+          <h1>Text Summarization Result</h1>
 
-        <p><strong>Original Text:</strong> <?= htmlspecialchars($text) ?></p>
+          <p><strong>Original Text:</strong> <?= htmlspecialchars($text) ?></p>
 
-        <!-- Form with Generate button -->
-        <form method="POST" id="generateForm">
-          <button type="submit" name="generate">Generate Summary</button>
-        </form>
-
-        <?php if (!empty($summary)): ?>
-          <p><strong>Summary:</strong> <?= htmlspecialchars($summary) ?></p>
-
-          <!-- Save button with an AJAX submit -->
-          <form method="POST" id="saveForm">
-            <button type="submit" name="save" id="save" data-summary="<?= htmlspecialchars($summary) ?>">Save
-              Summary</button>
+          <!-- Form with Generate button -->
+          <form method="POST" id="generateForm">
+            <button type="submit" name="generate">Generate Summary</button>
           </form>
-        <?php endif; ?>
 
-        <form method="POST" id="editForm">
-          <button type="submit" name="edit">Edit</button>
-        </form>
+          <?php if (!empty($summary)): ?>
+            <p><strong>Summary:</strong> <?= htmlspecialchars($summary) ?></p>
 
-        
+            <!-- Save button with an AJAX submit -->
+            <form method="POST" id="saveForm">
+              <button type="submit" name="save" id="save" data-summary="<?= htmlspecialchars($summary) ?>">Save
+                Summary</button>
+            </form>
+          <?php endif; ?>
 
-        <div id="message"></div>
+          <form method="POST" id="editForm">
+            <button type="submit" name="edit">Edit</button>
+          </form>
 
 
-        <!-- Form for Generating MCQs -->
-    <!-- <form method="POST" id="generateMCQForm">
+
+          <div id="message"></div>
+
+
+          <!-- Form for Generating MCQs -->
+          <!-- <form method="POST" id="generateMCQForm">
         <button type="submit" name="generate_mcq">Generate MCQs</button>
     </form> -->
 
-    <form action="" method="POST" id="generateMCQForm">
-      
-    <input type="hidden" name="file_id" value="<?= isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
-    <input type="hidden" name="mcq" value="<?= htmlspecialchars($mcq) ?>">
-    <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
+          <form action="" method="POST" id="generateMCQForm">
 
-    <button type="submit" name="generate_mcq">Generate MCQs2</button>
-</form>
+            <input type="hidden" name="file_id" value="<?= isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
+            <input type="hidden" name="mcq" value="<?= htmlspecialchars($mcq) ?>">
+            <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
 
-    <!-- Display MCQs -->
-    <?php if (!empty($mcq)): ?>
-        <p><strong>Multiple-Choice Questions:</strong></p>
-        <pre><?= htmlspecialchars($mcq) ?></pre>
-    <?php endif; ?>
+            <button type="submit" name="generate_mcq">Generate MCQs2</button>
+          </form>
 
-    <!-- Form for Generating Q&A -->
-    
-    <form action="" method="POST" id="generateQnA">
-    <input type="hidden" name="file_id" value="<?= isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
-    <input type="hidden" name="qa" value="<?= htmlspecialchars($qa) ?>">
-    <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
+          <!-- Display MCQs -->
+          <?php if (!empty($mcq)): ?>
+            <p><strong>Multiple-Choice Questions:</strong></p>
+            <pre><?= htmlspecialchars($mcq) ?></pre>
+          <?php endif; ?>
+
+          <!-- Form for Generating Q&A -->
+
+          <form action="" method="POST" id="generateQnA">
+            <input type="hidden" name="file_id" value="<?= isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
+            <input type="hidden" name="qa" value="<?= htmlspecialchars($qa) ?>">
+            <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
 
 
-    <button type="submit" name="generate_qa">Generate QnA2</button>
-</form>
+            <button type="submit" name="generate_qa">Generate QnA2</button>
+          </form>
 
-    <!-- Display Q&A -->
-    <?php if (!empty($qa)):     var_dump($qa);
-?>
-      
-        <p><strong>Questions and Answers:</strong></p>
-        <pre><?= htmlspecialchars($qa) ?></pre>
+          <!-- Display Q&A -->
+          <?php if (!empty($qa)):
+            var_dump($qa);
+            ?>
 
-    <?php endif; ?>
+            <p><strong>Questions and Answers:</strong></p>
+            <pre><?= htmlspecialchars($qa) ?></pre>
+
+          <?php endif; ?>
+        </div>
       </div>
     </div>
-  </div>
 
   </div>
-
+  </div>
 
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
@@ -332,41 +334,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
 
   var sessionUserID = <?php echo json_encode($_SESSION['UserID']); ?>;
- var ID = sessionUserID;
+  var ID = sessionUserID;
   var folderId = <?php echo json_encode($folder_id); ?>;
   // Prevent form submission and handle the save button logic
-  $('#saveForm').on('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+  $('#saveForm').on('submit', function (event) {
+    event.preventDefault(); // Prevent the form from submitting normally
 
-            // Get the summary from the button data
-            var summary = $('#save').data('summary');
-            var jsonSummary = JSON.stringify({S: summary});
+    // Get the summary from the button data
+    var summary = $('#save').data('summary');
+    var jsonSummary = JSON.stringify({ S: summary });
 
-            // Prepare the data for AJAX
-            var postData = {
-                name: 'Habibaazzz Summary',
-                user_id: ID,  // Example: replace with actual user ID
-                folder_id: folderId,  // Example: replace with actual folder ID
-                content: jsonSummary,
-                created_at: new Date().toISOString(),
-                file_type: 2  // Assuming 2 corresponds to "Summary"
-            };
+    // Prepare the data for AJAX
+    var postData = {
+      name: 'Habibaazzz Summary',
+      user_id: ID,  // Example: replace with actual user ID
+      folder_id: folderId,  // Example: replace with actual folder ID
+      content: jsonSummary,
+      created_at: new Date().toISOString(),
+      file_type: 2  // Assuming 2 corresponds to "Summary"
+    };
 
-            // Send an AJAX request to save_file.php
-            $.ajax({
-                url: 'sava_db_Q&A.php',
-                method: 'POST',
-                data: postData,  // Send form data
-                success: function(response) {
-                    // Display the message from PHP
-                    $('#message').html(response);
-                    //console.log('API Response:', response);
-                },
-                error: function(xhr, status, error) {
-                    $('#message').html('Error: ' + error);
-                }
-            });
-        });
+    // Send an AJAX request to save_file.php
+    $.ajax({
+      url: 'sava_db_Q&A.php',
+      method: 'POST',
+      data: postData,  // Send form data
+      success: function (response) {
+        // Display the message from PHP
+        $('#message').html(response);
+        //console.log('API Response:', response);
+      },
+      error: function (xhr, status, error) {
+        $('#message').html('Error: ' + error);
+      }
+    });
+  });
 </script>
 
 
