@@ -353,7 +353,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p><strong>Questions and Answers:</strong></p>
             <pre><?// htmlspecialchars($qa) ?></pre> -->
 <!-- 
-          <?php// endif; ?>
+          <?php // endif; ?>
         </div> -->
         <!-- Form for Generating MCQs -->
         <!-- <form method="POST" id="generateMCQForm">
