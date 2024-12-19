@@ -2,19 +2,19 @@
 
 require_once '../config/Database.php';
 require_once '../includes/FileContent.php';
-require_once '../includes/session.php'; 
+require_once '../includes/session.php';
 
 require_once __DIR__ . '/../Models/User.php';
 $current_page = 'word editor';
 
 if (isset($UserObject) && $UserObject instanceof User) {
-    $user_id = $UserObject->id; 
+    $user_id = $UserObject->id;
 } else {
     header("Location: /smartnotes/Public/login.php");
     exit();
 }
 
-// Now you can safely use $user_id
+
 ?>
 
 

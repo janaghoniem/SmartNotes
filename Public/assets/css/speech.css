@@ -9,9 +9,9 @@ body {
 	min-height: 100vh;
 }
 
-li {
+/* li {
 	margin-left: 16px;
-}
+} */
 
 a {
 	cursor: pointer;
