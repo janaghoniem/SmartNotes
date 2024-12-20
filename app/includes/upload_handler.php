@@ -1,4 +1,5 @@
 <?php
+use App\Controllers\FileController;
 require_once __DIR__ . '/../Controllers/FileController.php'; 
 require_once __DIR__ . '/session.php';
 

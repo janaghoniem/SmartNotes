@@ -1,10 +1,10 @@
 <?php
-
 require_once '../config/Database.php';
 require_once '../includes/FileContent.php';
-require_once '../includes/session.php';
 
+use App\Models\User;
 require_once __DIR__ . '/../Models/User.php';
+require_once __DIR__ . '/../Controllers/FileController.php';
 $current_page = 'word editor';
 
 if (isset($UserObject) && $UserObject instanceof User) {
@@ -13,7 +13,9 @@ if (isset($UserObject) && $UserObject instanceof User) {
     header("Location: /smartnotes/Public/login.php");
     exit();
 }
-
+// $fileController = new FileController();
+// i want to pass the file id and call the save file content function when the button is clicked
+// FileController::saveFileContent($file_id,$content)
 
 ?>
 
@@ -134,6 +136,7 @@ if (isset($UserObject) && $UserObject instanceof User) {
                 </div>
             </div>
             <input type="hidden" id="userid" value="<?php echo $user_id; ?>">
+            <input type="hidden" id="file_id" value="<?php echo $file_id; ?>">
             <div id="content" contenteditable="true" spellcheck="false">
                 <p> <?php include '../includes/FileContent.php';
                 echo $content; ?></p>

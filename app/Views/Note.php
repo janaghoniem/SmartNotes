@@ -1,4 +1,6 @@
 <?php
+use App\Controllers\FileController;
+
 // include '../includes/user_sidebar.php';
 include '../config/Database.php';
 require_once __DIR__ . '/../../app/Controllers/FileController.php';

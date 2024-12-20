@@ -1,5 +1,6 @@
 <?php
-$con = new mysqli("localhost", "root", "", "smartnotes_db");
+namespace App\Models;
+$con = new \mysqli("localhost", "root", "", "smartnotes_db");
 
 class UserActivity
 {

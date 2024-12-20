@@ -1,4 +1,5 @@
 <?php
+use App\Controllers\UserController;
 require_once __DIR__ . '/../../app/Controllers/UserController.php';
 require_once __DIR__ . '/../../app/Controllers/SurveyController.php';
 require_once __DIR__ . '/../../app/includes/session.php';

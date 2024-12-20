@@ -8,7 +8,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Smartnotes\\Gemini\\": "src/"
+            "Smartnotes\\Gemini\\": "src/",
+            "App\\": "app/"
         }
     },
     "authors": [
@@ -16,5 +17,8 @@
             "name": "Habiba Darwish",
             "email": "habibadarwish2004@gmail.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    }
 }

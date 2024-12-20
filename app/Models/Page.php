@@ -1,6 +1,8 @@
 <?php
+namespace App\Models;
+
 // Create connection
-$con = new mysqli("localhost", "root", "", "smartnotes_db");
+$con = new \mysqli("localhost", "root", "", "smartnotes_db");
 
 class Page {
     public $id;

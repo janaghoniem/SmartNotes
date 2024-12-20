@@ -1,4 +1,6 @@
 <?php
+use App\Controllers\UserController;
+
 // Include necessary controllers and session management
 require_once __DIR__ . '/../../app/Controllers/UserController.php';
 require_once __DIR__ . '/../../app/includes/session.php';

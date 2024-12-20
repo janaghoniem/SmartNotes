@@ -1,0 +1,1 @@
+{"version":1,"defects":{"UserControllerTest::testLogin":5,"UserTest::testInsertUser":8,"UserTest::testUpdateUser":8,"UserTest::testGetUserById":7},"times":{"UserControllerTest::testLogin":0.135,"UserTest::testInsertUser":0.167,"UserTest::testUpdateUser":0.09,"UserTest::testGetUserById":0.109}}

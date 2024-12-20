@@ -1,4 +1,8 @@
 <?php
+namespace App\Controllers;
+use App\Models\User;
+use App\Models\UserFactory;
+
 require_once __DIR__ . '/../Models/User.php';
 require_once __DIR__ . '/../Config/Database.php';
 

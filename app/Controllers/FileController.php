@@ -1,4 +1,6 @@
 <?php
+namespace App\Controllers;
+use App\Models\Note;
 require_once __DIR__ . '/../Models/Note.php';
 
 class FileController {

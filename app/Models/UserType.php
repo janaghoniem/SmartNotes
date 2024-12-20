@@ -1,4 +1,6 @@
 <?php
+namespace App\Models;
+use App\Config\Database;
 require_once __DIR__ . '/../Config/Database.php';
 include 'Page.php';
 

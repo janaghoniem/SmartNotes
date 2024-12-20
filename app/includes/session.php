@@ -1,6 +1,9 @@
 <?php
 @session_start();
 
+
+use App\Config\Database;
+use App\Models\User;
 require_once __DIR__ . '/../Models/User.php';
 
 function isPageAllowed($currentPage, $allowedPages)

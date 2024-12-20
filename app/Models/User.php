@@ -1,4 +1,8 @@
 <?php
+namespace App\Models;
+use App\Config\Database;
+use App\Models\UserActivity;
+use App\Models\UserType;
 require_once __DIR__ . '/../Config/Database.php';
 include 'UserType.php';
 include 'UserActivity.php';
