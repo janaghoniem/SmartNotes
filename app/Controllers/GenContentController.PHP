@@ -2,11 +2,13 @@
 require_once '../models/file_class.php';
 // $controller = new FileGenController();
 // $controller->save();
-class FileGenController {
+class FileGenController
+{
     private $fileModel;
 
-    public function __construct() {
-        
+    public function __construct()
+    {
+
     }
 
     // public function getFileContent($fileId) {
@@ -49,9 +51,10 @@ class FileGenController {
             return "<div>Invalid request method.</div>";
         }
     }
-    
 
-    public function generateSummary($text) {
+
+    public function generateSummary($text)
+    {
         $client = new GuzzleHttp\Client();
         $prompt = "summarize the following text: " . $text;
 
@@ -68,9 +71,17 @@ class FileGenController {
         }
     }
 
-    public function generateMCQ($text) {
+    public function generateMCQ($text)
+    {
         $client = new GuzzleHttp\Client();
-        $mcq_prompt = "Generate many multiple-choice questions and their answers based on the following text: " . $text;
+        $mcq_prompt = "Generate many multiple-choice questions and their answers based on the following text: " . $text . " Format: 
+        **Question x:** 
+        - Question text 
+        a) Option A 
+        b) Option B 
+        c) Option C 
+        d) Option D 
+        **Answer: c)**";
 
         try {
             $response = $client->request('POST', 'http://localhost:3000/summarize', [
@@ -86,7 +97,8 @@ class FileGenController {
         }
     }
 
-    public function generateQA($text) {
+    public function generateQA($text)
+    {
         $client = new GuzzleHttp\Client();
         $qa_prompt = "Generate questions and answers from the following text: " . $text . "\nPlease format the output as follows: \nQuestion 1: <question text>\nAnswer 1: <answer text>\nQuestion 2: <question text>\nAnswer 2: <answer text>";
 
