@@ -1,30 +1,49 @@
 <?php
+require_once __DIR__ . '/../Config/Database.php';
 include 'Page.php';
-// Create connection
-$con = new mysqli("localhost", "root", "", "smartnotes_db");
 
-class UserType {
+class UserType
+{
     public $id;
     public $userType_name;
-    public $pages_array;
+    public $pages_array = []; // Initialize as an empty array
 
-    public function __construct($id) {
-        if($id != "") {
-            $sql = "SELECT * from user_types where id = $id";
-            $result = mysqli_query($GLOBALS['con'], $sql);
-            if($row = mysqli_fetch_array($result)) {
-                $this->id = $row['id'];
-                $this->userType_name = $row['name'];
-                $sql = "SELECT page_id FROM usertype_pages WHERE usertype_id = $this->id";
-                $result = mysqli_query($GLOBALS['con'], $sql);
-                $i = 0;
-                while($row1 = mysqli_fetch_array($result)) {
-                    $this->pages_array[$i] = new Page($row1[0]);
-                    $i++;
+    public function __construct($id)
+    {
+        if (!empty($id)) {
+            $sql = "
+            SELECT ut.id AS usertype_id, ut.name AS usertype_name, p.id AS page_id, p.name AS page_name
+            FROM user_types ut
+            LEFT JOIN usertype_pages up ON ut.id = up.usertype_id
+            LEFT JOIN pages p ON up.page_id = p.id
+            WHERE ut.id = ?
+            ";
+
+            $db = Database::getInstance()->getConnection();
+            $stmt = $db->prepare($sql);
+
+            if (!$stmt) {
+                throw new Exception("Failed to prepare the SQL statement: " . $db->error);
+            }
+
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // Fetch user type and associated pages
+            while ($row = $result->fetch_assoc()) {
+                if (empty($this->id)) {
+                    $this->id = $row['usertype_id'];
+                    $this->userType_name = $row['usertype_name'];
+                }
+
+                if (!empty($row['page_id'])) {
+                    $this->pages_array[] = new Page($row['page_id']);
                 }
             }
+
+            $stmt->close();
         }
     }
 }
-
 ?>
