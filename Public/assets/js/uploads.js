@@ -41,6 +41,7 @@ input.addEventListener("change", function (e) {
         // Check file type and extract text accordingly
         if (fileExtension === 'pdf') {
             extractTextFromPDF(selectedFile).then(extractedText => {
+                console.log('Extracted Text (PDF):', extractedText); // Log extracted content
                 formData.append("content", extractedText); // Append extracted text
                 uploadFile(formData);
             }).catch(err => {
@@ -49,6 +50,7 @@ input.addEventListener("change", function (e) {
             });
         } else if (fileExtension === 'docx') {
             extractTextFromDOCX(selectedFile).then(extractedText => {
+                console.log('Extracted Text (DOCX):', extractedText); // Log extracted content
                 formData.append("content", extractedText); // Append extracted text
                 uploadFile(formData);
             }).catch(err => {
@@ -57,6 +59,7 @@ input.addEventListener("change", function (e) {
             });
         } else if (fileExtension === 'doc') {
             extractTextFromDOC(selectedFile).then(extractedText => {
+                console.log('Extracted Text (DOC):', extractedText); // Log extracted content
                 formData.append("content", extractedText); // Append extracted text
                 uploadFile(formData);
             }).catch(err => {
@@ -65,6 +68,7 @@ input.addEventListener("change", function (e) {
             });
         } else if (fileExtension === 'txt') {
             extractTextFromTXT(selectedFile).then(extractedText => {
+                console.log('Extracted Text (TXT):', extractedText); // Log extracted content
                 formData.append("content", extractedText); // Append extracted text
                 uploadFile(formData);
             }).catch(err => {
@@ -149,6 +153,7 @@ async function extractTextFromTXT(file) {
 }
 
 // Function to handle file upload via AJAX
+// Function to handle file upload via AJAX
 function uploadFile(formData) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "../includes/upload_handler.php", true);
@@ -159,22 +164,22 @@ function uploadFile(formData) {
             try {
                 const response = JSON.parse(xhr.responseText);
                 if (response.status) {
-                    statusDisplay.textContent = response.message;
+                    alert(response.message); // Show success message as alert
                     dropBox.innerHTML = `<h4>Upload Complete!</h4>`;
                 } else {
-                    statusDisplay.textContent = `Error: ${response.message}`;
+                    alert(`Error: ${response.message}`); // Show error message as alert
                 }
             } catch (e) {
                 console.error("Error parsing response:", e);
-                statusDisplay.textContent = "Server returned invalid response.";
+                alert("Server returned invalid response.");
             }
         } else {
-            statusDisplay.textContent = "Server error. Please try again.";
+            alert("Server error. Please try again."); // Show server error as alert
         }
     };
 
     xhr.onerror = function () {
-        statusDisplay.textContent = "Network error. Please try again.";
+        alert("Network error. Please try again."); // Show network error as alert
     };
 
     xhr.send(formData);

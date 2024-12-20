@@ -16,16 +16,6 @@ class Note {
         return $result->fetch_assoc()['content'] ?? null;
     }
 
-    public function updateContent($file_id, $content) {
-        $stmt = $this->db->prepare("UPDATE files SET content = ? WHERE id = ?");
-        $stmt->bind_param("si", $content, $file_id);
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            error_log("Update failed: " . $stmt->error);
-            return false;
-        }
-    }
 
     public function createFile($name, $user_id, $folder_id, $content, $file_type) {
         $stmt = $this->db->prepare("INSERT INTO files (name, user_id, folder_id, content, created_at, file_type) 
@@ -40,6 +30,24 @@ class Note {
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_assoc()['folder_id'] ?? null;
+    }
+    
+
+
+    public function getFileById($file_id) {
+        $stmt = $this->db->prepare("SELECT * FROM files WHERE id = ?");
+        $stmt->bind_param("i", $file_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $file = $result->fetch_assoc();
+        $stmt->close();
+        return $file;
+    }
+    
+    public function updateFileContent($file_id, $content) {
+        $stmt = $this->db->prepare("UPDATE files SET content = ? WHERE id = ?");
+        $stmt->bind_param("si", $content, $file_id);
+        return $stmt->execute();
     }
     
 }

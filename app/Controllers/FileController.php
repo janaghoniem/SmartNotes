@@ -13,7 +13,7 @@ class FileController {
     }
 
     public function saveFileContent($file_id, $content) {
-        return $this->fileModel->updateContent($file_id, $content);
+        return $this->fileModel->updateFileContent($file_id, $content);
     }
 
     public function createFile($name, $user_id, $folder_id, $content, $file_type) {

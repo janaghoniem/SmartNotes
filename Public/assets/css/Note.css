@@ -1,107 +1,46 @@
-.Bootstrap-body {
-    /* margin: 50px; */
-    line-height: 230%;
-    
+button{
+    margin: 5em auto;
+    padding: 1em 2.5em;
+    background: #222;
+    border: 1px solid #222;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
 }
-/* 
-
-.come-in {
-    -webkit-transform: translateY(150px);
-    -ms-transform: translateY(150px);
-    transform: translateY(150px);
-    -webkit-animation: come-in 0.8s ease forwards;
-    animation: come-in 0.8s ease forwards;
+button:hover {
+    background: transparent;
+    color: #222;
 }
-
-.come-in:nth-child(odd) {
-    -webkit-animation-duration: 0.6s;
-    animation-duration: 0.6s;
+.wrapper{
+    margin-top:20%;
 }
-
-.already-visible {
-    -webkit-transform: translateY(0);
-    -ms-transform: translateY(0);
-    transform: translateY(0);
-    -webkit-animation: none;
-    animation: none;
-} */
-
-.summaried-class {
-    display: none;
-}
-
-.note-content{
-    width: 100vh;
-}
-.note-content.centered {
-    /* display: flex;
+.Summary-container {
+    /* padding-top:30em; */
+    margin-right:20vh;
+    display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; */
-    margin: 50px 2px 2px 100px;
-    width: 100vh;
+    height: 100%;
+    width: 100%;
 }
-
-.btn-primary.summarize {
-    background-color: #31708f;
-    border-radius: 2px;
-    color: white;
-    padding: 5px 30px;
-    cursor: pointer;
+.row.come-in {
+    max-width: 60%; /* Adjust this value as needed */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    padding: 20px; /* Optional: Add some padding */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+    background-color: #f9f9f9; /* Optional: Add a background color */
+    border: 1px solid #ccc; /* Optional: Add a border */
 }
-
-.btn-primary.Edit {
-    background-color: #31708f;
-    border-radius: 2px;
-    color: white;
-    padding: 5px 30px;
-    cursor: pointer;
-    margin-left:18vh;
-}
-.btn-primary.generate {
-    background-color: #31708f;
-    border-radius: 2px;
-    color: white;
-    padding: 5px 30px;
-    cursor: pointer;
-    margin-left:30vh;
-}
-
-.btn-primary.save {
-    background-color: #8a6d3b;
-    border-radius: 2px;
-    color: white;
-    padding: 5px 30px;
-    cursor: pointer;
-    margin-left:6vh;
-}
-
-
-.panel-body p {
-    font-family: Arial, sans-serif;
-    /* font-size: 1.2rem; */
-}
-
-
-.panel-heading{
-    padding-left:50px;
-}
-
-#container-fluid {
-    display:block;
-    margin: 10px 2px 2px 330px
-}
-
-/* @-webkit-keyframes come-in {
-    to {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-    }
-}
-
-@keyframes come-in {
-    to {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-    }
-} */
+.button-container {
+    display: flex;
+    gap: 10px; /* Adds spacing between buttons */
+    justify-content: space-between; /* Adjust as needed */
+  }
+  
+  .button-container button {
+    flex: 1; /* Optional: Makes buttons flexible, you can adjust or remove */
+    margin: 5px; /* Adjusts spacing around individual buttons */
+  }
+  

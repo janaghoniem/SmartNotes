@@ -1,14 +1,23 @@
 <?php
-include '../config/Database.php';
 
-include '../includes/FileContent.php';
-include_once '../includes/session.php';
-include_once '../Models/User.php';
+require_once '../config/Database.php';
+require_once '../includes/FileContent.php';
+require_once '../includes/session.php';
+
+require_once __DIR__ . '/../Models/User.php';
 $current_page = 'word editor';
-@session_start(); // Make sure session is started
-$user_id = $_SESSION['UserID'] ?? null;  // Ensure user_id is correctly fetched
+
+if (isset($UserObject) && $UserObject instanceof User) {
+    $user_id = $UserObject->id;
+} else {
+    header("Location: /smartnotes/Public/login.php");
+    exit();
+}
+
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
