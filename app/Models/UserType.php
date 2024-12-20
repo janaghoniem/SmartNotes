@@ -11,15 +11,10 @@ class UserType
     public function __construct($id)
     {
         if (!empty($id)) {
-            $sql = "
-            SELECT ut.id AS usertype_id, ut.name AS usertype_name, p.id AS page_id, p.name AS page_name
-            FROM user_types ut
-            LEFT JOIN usertype_pages up ON ut.id = up.usertype_id
-            LEFT JOIN pages p ON up.page_id = p.id
-            WHERE ut.id = ?
-            ";
-
             $db = Database::getInstance()->getConnection();
+
+            // Fetch user type information
+            $sql = "SELECT * FROM user_types WHERE id = ?";
             $stmt = $db->prepare($sql);
 
             if (!$stmt) {
@@ -30,15 +25,24 @@ class UserType
             $stmt->execute();
             $result = $stmt->get_result();
 
-            // Fetch user type and associated pages
-            while ($row = $result->fetch_assoc()) {
-                if (empty($this->id)) {
-                    $this->id = $row['usertype_id'];
-                    $this->userType_name = $row['usertype_name'];
+            if ($row = $result->fetch_assoc()) {
+                $this->id = $row['id'];
+                $this->userType_name = $row['name'];
+
+                // Fetch associated pages
+                $sql = "SELECT page_id FROM usertype_pages WHERE usertype_id = ?";
+                $stmt = $db->prepare($sql);
+
+                if (!$stmt) {
+                    throw new Exception("Failed to prepare the SQL statement: " . $db->error);
                 }
 
-                if (!empty($row['page_id'])) {
-                    $this->pages_array[] = new Page($row['page_id']);
+                $stmt->bind_param("i", $this->id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                while ($row1 = $result->fetch_assoc()) {
+                    $this->pages_array[] = new Page($row1['page_id']);
                 }
             }
 
