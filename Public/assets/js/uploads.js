@@ -76,7 +76,7 @@ input.addEventListener("change", function (e) {
                 statusDisplay.textContent = "Failed to extract text from TXT.";
             });
         } else {
-            statusDisplay.textContent = "Unsupported file type.";
+            alert("Unsupported file type.");
         }
     });
 });

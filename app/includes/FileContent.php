@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         // Create a new file when no file ID is provided
-        $name = "speechToText" . $folder_id;
+        $name = "speech" . $folder_id;
         try {
             $newFileId = $fileController->createFile($name, $user_id, $folder_id, $newContent, $file_type);
             if ($newFileId) {

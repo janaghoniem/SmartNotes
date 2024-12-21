@@ -1,8 +1,6 @@
 <?php
-namespace App\Controllers;
-use App\Models\file;
-use GuzzleHttp\Client;
-use Exception;
+
+
 // require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../models/file_class.php';
 
