@@ -45,6 +45,17 @@ class User
         self::$instance = null;
     }
 
+
+    public static function createForTesting(array $data): self
+    {
+        $instance = new self();
+        foreach ($data as $key => $value) {
+            $instance->$key = $value;
+        }
+        return $instance;
+    }
+
+
     private function loadUser($id)
     {
         $db = Database::getInstance()->getConnection();

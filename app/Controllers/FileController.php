@@ -10,6 +10,9 @@ class FileController {
         $this->fileModel = new Note();
     }
 
+    public function setFileModel(Note $fileModel) {
+        $this->fileModel = $fileModel;
+    }
     public function getFileContent($file_id) {
         return $this->fileModel->getContentById($file_id);
     }

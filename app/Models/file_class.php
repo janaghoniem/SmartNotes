@@ -1,5 +1,8 @@
 <?php
-$con = new mysqli("localhost", "root", "", "smartnotes_db");
+namespace App\Models;
+use Exception;
+use APP\Config\Database;
+$con = new \mysqli("localhost", "root", "", "smartnotes_db");
 if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
@@ -34,6 +37,11 @@ class file
     public $created_at;
     public $file_type;
 
+
+    public static function init($dbConnection)
+    {
+        self::$db = $dbConnection;
+    }
     public function __construct($id)
     {
         global $con;

@@ -1,6 +1,11 @@
 <?php
+namespace App\Controllers;
+use App\Models\file;
+use GuzzleHttp\Client;
+use Exception;
+// require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../models/file_class.php';
 
-require_once '../models/file_class.php';
 // $controller = new FileGenController();
 // $controller->save();
 class FileGenController
@@ -19,6 +24,15 @@ class FileGenController
     // public function getFolderId($fileId) {
     //     return $this->fileModel->getFolderIdByFileId($fileId);
     // }
+
+    public function setFileModel($fileModel)
+    {
+        $this->fileModel = $fileModel;
+    }
+    public function setHttpClient($client)
+    {
+        $this->httpClient = $client;
+    }
 
     public function save()
     {

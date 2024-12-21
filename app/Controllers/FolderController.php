@@ -1,4 +1,7 @@
 <?php
+namespace App\Controllers;
+use App\Models\file;
+
 require_once __DIR__ . '/../includes/sidebar.php';
 class FolderController {
     public static function create($con, $post, $get, $session) {
