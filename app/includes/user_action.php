@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../Controllers/UserController.php';
-require_once __DIR__ . '/../Models/UserController.php';
+require_once __DIR__ . '/../Models/User.php';
 $userController = new UserController();
 $UserObject = User::getInstance();
 
