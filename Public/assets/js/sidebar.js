@@ -199,9 +199,9 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.send(data);
     }
     
-    if (xhr.status === 200 && xhr.responseText.trim() === 'success') {
-        location.reload(); // Reloads the entire page
-    }
+    // if (xhr.status === 200 && xhr.responseText.trim() === 'success') {
+    //     location.reload(); // Reloads the entire page
+    // }
     
 
     function replaceWithOriginalElement(inputField, originalElement) {
