@@ -30,7 +30,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 score++;
             }
         });
-        alert(`You scored ${score} out of ${questions.length}!`);
+        // Teal popup for score alert
+        const popup = document.createElement('div');
+        popup.style.position = 'fixed';
+        popup.style.top = '40%';
+        popup.style.left = '50%';
+        popup.style.transform = 'translate(-50%, -50%)';
+        popup.style.backgroundColor = '#000000';
+        popup.style.color = '#fff';
+        popup.style.padding = '20px';
+        popup.style.borderRadius = '10px';
+        popup.style.boxShadow = '0 0 40px rgba(0, 0, 0, 0.5)';
+        popup.innerText = `You scored ${score} out of ${questions.length}!`;
+
+        document.body.appendChild(popup);
+        setTimeout(() => {
+            document.body.removeChild(popup);
+        }, 5000);
     };
 
     questions.forEach((question, idx) => {
