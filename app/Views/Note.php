@@ -92,9 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif (isset($_POST['generate'])) {
     $summary = $GenController->generateSummary($text);
   } elseif (isset($_POST['generate_mcq'])) {
-    $GenController->generateMCQ($text);
+    $mcq = $GenController->generateMCQ( $text);
   } elseif (isset($_POST['generate_qa'])) {
-    $GenController->generateQA($text);
+    $qa = $GenController->generateQA($text);
+    if (!isset($_SESSION['qa'])) {
+      $_SESSION['qa'] = $qa;  // Only store if it's not already set
+  }
+    
   }
 }
 if (isset($_POST['edit']) && isset($_POST['file_id'])) {
@@ -102,6 +106,11 @@ if (isset($_POST['edit']) && isset($_POST['file_id'])) {
   header("Location: ../Views/speech.php?id=" . $file_id);
   exit();
 }
+
+
+$_SESSION['file_id'] = isset($_GET['id']) ? intval($_GET['id']) : null;
+$_SESSION['folder_id'] = $file_id !== null ? $fileController->getFolderId($_SESSION['file_id']) : null;
+$_SESSION['content'] = $file_id !== null ? $fileController->getFileContent($_SESSION['file_id']) : "Invalid file ID.";
 
 ?>
 
@@ -174,7 +183,7 @@ if (isset($_POST['edit']) && isset($_POST['file_id'])) {
               <input type="hidden" name="mcq" value="<?= htmlspecialchars($mcq) ?>">
               <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
 
-              <button type="submit" name="generate_mcq">Generate MCQs2</button>
+              <button type="submit" name="generate_mcq">Generate MCQs</button>
             </form>
           </div>
 
@@ -186,7 +195,7 @@ if (isset($_POST['edit']) && isset($_POST['file_id'])) {
               <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
 
 
-              <button type="submit" name="generate_qa">Generate QnA2</button>
+              <button type="submit" name="generate_qa">Generate QnA</button>
             </form>
           </div>
 
