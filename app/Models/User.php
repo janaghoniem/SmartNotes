@@ -136,6 +136,15 @@ class User
         $db = Database::getInstance()->getConnection();
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 
+
+
+        $requiredFields = ['username', 'first_name', 'last_name', 'email', 'password', 'country', 'user_type'];
+        foreach ($requiredFields as $field) {
+            if (empty($data[$field])) {
+                return false; // Fail if any required field is missing
+            }
+        }
+        
         $sql = "INSERT INTO users (username, first_name, last_name, email, password, country, user_type) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $db->prepare($sql);

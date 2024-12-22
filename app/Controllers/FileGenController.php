@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Models\file;
 // require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../models/file_class.php';
 
@@ -34,23 +34,26 @@ class FileGenController
 
     public function save()
     {
+        $conn = new mysqli('localhost', 'root', '', 'smartnotes_db');
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (
-                isset($_POST['name']) &&
-                isset($_POST['user_id']) &&
-                isset($_POST['folder_id']) &&
-                isset($_POST['content']) &&
-                isset($_POST['file_type'])
+                isset($_POST['name'], $_POST['user_id'], $_POST['folder_id'], $_POST['content'], $_POST['file_type'])
             ) {
                 $name = htmlspecialchars($_POST['name']);
                 $user_id = (int) $_POST['user_id'];
                 $folder_id = (int) $_POST['folder_id'];
-                $content = json_decode($_POST['content'], true); // Decode JSON into an associative array
+                $content = json_decode($_POST['content'], true);
                 $file_type = (int) $_POST['file_type'];
-                $summary = $content['S'] ?? ''; // Default to an empty string if 'S' doesn't exist
+                $summary = $content['S'] ?? '';
 
-                // Call the model function to save the data
-                $note_id = file::create($name, $user_id, $folder_id, json_encode(['S' => $summary]), $file_type);
+                $escaped_content = $conn->real_escape_string(json_encode(['S' => $summary]));
+
+                $note_id = file::create($name, $user_id, $folder_id, $escaped_content, $file_type);
 
                 if ($note_id) {
                     return "<div>Summary saved successfully! Note ID: $note_id</div>";

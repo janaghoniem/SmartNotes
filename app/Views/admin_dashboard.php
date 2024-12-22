@@ -1,4 +1,5 @@
 <?php
+use App\Models\UserActivity;
 //connect to database
 require_once __DIR__ . '/../../app/Controllers/UserController.php';
 require_once __DIR__ . '/../../app/includes/session.php';

@@ -48,17 +48,17 @@ class UserTest extends TestCase
         $this->assertTrue($result, "The user should be inserted successfully.");
     }
 
-    // public function testInsertUserWithMissingFields()
-    // {
-    //     $data = [
-    //         'username' => 'testuser',
-    //         'email' => 'testuser@example.com',
-    //         // Missing other required fields like first_name, last_name, etc.
-    //     ];
+    public function testInsertUserWithMissingFields()
+    {
+        $data = [
+            'username' => 'testuser',
+            'email' => 'testuser@example.com',
+            // Missing other required fields like first_name, last_name, etc.
+        ];
 
-    //     $result = User::insertUser($data);
-    //     $this->assertFalse($result, "The insertUser method should fail when required fields are missing.");
-    // }
+        $result = User::insertUser($data);
+        $this->assertFalse($result, "The insertUser method should fail when required fields are missing.");
+    }
 
     public function testSingletonBehavior()
     {
