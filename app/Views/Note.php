@@ -183,7 +183,7 @@ $_SESSION['content'] = $file_id !== null ? $fileController->getFileContent($_SES
               <input type="hidden" name="mcq" value="<?= htmlspecialchars($mcq) ?>">
               <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
 
-              <button type="submit" name="generate_mcq">Generate MCQs</button>
+              <button type="submit" name="generate_mcq">Generate Quiz</button>
             </form>
           </div>
 
@@ -195,7 +195,7 @@ $_SESSION['content'] = $file_id !== null ? $fileController->getFileContent($_SES
               <input type="hidden" name="text" value="<?= htmlspecialchars($text) ?>">
 
 
-              <button type="submit" name="generate_qa">Generate QnA</button>
+              <button type="submit" name="generate_qa">Generate Flashcards</button>
             </form>
           </div>
           <div>
@@ -205,7 +205,7 @@ $_SESSION['content'] = $file_id !== null ? $fileController->getFileContent($_SES
              
 
 
-              <button type="submit" name="generated_qa">View Generated QnA</button>
+              <button type="submit" name="generated_qa">View Saved Flashcards</button>
             </form>
           </div>
 
