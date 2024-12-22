@@ -13,133 +13,140 @@ body {
 }
 
 .quiz-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     max-width: 750px;
     margin: 40px auto;
     padding: 40px;
     border-radius: 20px;
     background: #c0e2df;
     position: relative;
-    min-height: 400px;
+    min-height: 500px;
     overflow: hidden;
-    left: 7%;
     transition: background 0.4s ease;
 }
 
 .quiz-box {
+    display: none;
     position: absolute;
     top: 50%;
-    left: 650px; /* Default position (off-screen to the right) */
-    transform: translateY(-50%);
-    width: 650px;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 0;
-    transition: left 0.6s ease, opacity 0.6s ease, visibility 0s 0.6s;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 650px;
+    z-index: 1;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    text-align: center;
 }
 
 .quiz-box.active {
-    left: 50px; /* Centered position */
+    display: block;
     opacity: 1;
     visibility: visible;
     z-index: 1;
-    transition: left 0.6s ease, opacity 0.6s ease, visibility 0s;
 }
 
 .quiz-box h4,
 .quiz-box h5 {
     margin: 0;
     line-height: 1.2;
-}
-
-.quiz-box h4 {
-    display: inline;
-}
-
-.quiz-box h5 {
-    display: inline;
-    margin-left: 5px;
+    text-align: center;
 }
 
 .text-center.pb-4 {
     padding-bottom: 5px;
     margin-bottom: 0;
 }
-
-.h5.font-weight-bold {
-    margin-bottom: 5px;
-}
-
-.h4.font-weight-bold {
-    margin-top: 0;
-    margin-bottom: 15px;
+.quiz-box h4 {
+    margin-bottom: 40px; /* Increase distance between question and choices */
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    justify-content: center;
+}
+.answer-options-container {
+    display: flex;
+    justify-content: center; /* Center the container */
+    width: 100%;
+    margin-bottom: 10px; /* Add some space between options */
+}
+
+label.answer-options {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    cursor: pointer;
+    justify-content: flex-start; /* Align answers to the left */
+    width: 100%;
+    max-width: 500px; /* Ensure a max width for the label */
+    text-align: left; /* Ensure text is aligned to the left */
+}
+
+.answer-options input[type="radio"] {
+    appearance: none;
+    height: 18px;
+    width: 18px;
+    margin-right: 10px;
+    border: 2px solid #444;
+    border-radius: 50%;
+    background-color: white;
+    transition: all 0.3s ease;
+    vertical-align: middle; /* Ensure alignment with text */
+}
+
+
+.answer-options {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+/* .answer-options input[type="radio"] {
+    appearance: none;
+    height: 18px;
+    width: 18px;
+    margin-right: 10px;
+    border: 2px solid #444;
+    border-radius: 50%;
+    background-color: white;
+    transition: all 0.3s ease;
+} */
+
+.answer-options input[type="radio"]:checked {
+    background-color: teal;
+    border-color: teal;
+}
+
+.answer-options:hover input[type="radio"] {
+    border-color: teal;
+}
+
+button {
+    margin-top: 15px;
+    padding: 8px 12px;
+    background-color: teal;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.answer-options {
-    position: relative;
-    padding-left: 30px;
-    margin-bottom: 10px;
-}
-
-.answer-options input {
-    opacity: 0;
-}
-
-.checkmark {
-    position: absolute;
-    top: 4px;
-    left: 3px;
-    height: 20px;
-    width: 20px;
-    background-color: #c0e2df;
-    border: 2px solid #444;
-    border-radius: 50%;
-}
-
-.answer-options input:checked ~ .checkmark:after {
-    display: block;
-}
-
-.answer-options .checkmark:after {
-    content: "";
-    width: 9px;
-    height: 9px;
-    display: block;
-    background: white;
-    position: absolute;
-    top: 51%;
-    left: 51%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: 300ms ease-in-out 0s;
-}
-
-.answer-options input[type="radio"]:checked ~ .checkmark {
-    background: #590995;
-    border: 2px solid #590995;
-    transition: 300ms ease-in-out 0s;
-}
-
-.answer-options input[type="radio"]:checked ~ .checkmark:after {
-    transform: translate(-50%, -50%) scale(1);
+button:hover {
+    background-color: darkcyan;
 }
 
 .d-flex {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: 100px;
 }
-.d-flex.flex-column {
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-}
+
 .btn1 {
     background-color: inherit;
     border: 1px solid rgb(63, 139, 139);
@@ -152,10 +159,6 @@ label {
 .btn-primary {
     background-color: rgb(63, 139, 139);
     border: 1px solid rgb(63, 139, 139);
-}
-
-.btn1:focus {
-    box-shadow: none;
 }
 
 .btn1:hover {
@@ -175,7 +178,42 @@ label {
 .btn.btn-primary:hover .fa-arrow-left {
     transform: translate(-8px);
 }
+label.answer-options.correct {
+    color: green; /* Correct answer text color */
+}
 
+label.answer-options.wrong {
+    color: red; /* Wrong answer text color */
+}
+
+
+#saveFormQnA, form[method="POST"] {
+    display: inline-block; /* Ensure buttons stack */
+    margin: 10px 10px 0; /* Center align buttons and add spacing */
+    width: 100%; /* Buttons take full width inside their container */
+    text-align: center;
+}
+
+button {
+    width: 40%; /* Reduce button width */
+    max-width: 200px; /* Optional: limit button width */
+    padding: 8px 16px; /* Reduce button height and padding */
+    font-size: 14px; /* Make text size smaller */
+    margin: 0 5px; /* Reduce space between buttons */
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center; /* Center align buttons horizontally */
+    gap: 0px; /* Reduced space between buttons */
+    margin-top: 20px;
+}
 /* Mobile responsiveness */
 @media (max-width: 767px) {
     .quiz-container {
@@ -185,10 +223,11 @@ label {
 
     .quiz-box {
         width: 280px;
-        left: 650px; /* Off-screen default */
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .quiz-box.active {
-        left: 15px; /* Centered for mobile */
+        display: block;
     }
 }

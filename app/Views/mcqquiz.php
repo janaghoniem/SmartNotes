@@ -233,7 +233,7 @@ if (!empty($question)) {
 
 
 <script src="../../public/assets/js/sidebar.js"></script>
-<script src="../../public/assets/js/mcqquiz.js"></script>
+<script src=" ../../Public/assets/js/mcqquiz.js"></script>
 
 
 <!-- Core JS Files -->

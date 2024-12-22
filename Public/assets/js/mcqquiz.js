@@ -1,58 +1,59 @@
 document.addEventListener('DOMContentLoaded', function () {
     const questions = document.querySelectorAll('.quiz-box');
-    const nextBtns = document.querySelectorAll('[id^=next-btn]');
-    const backBtns = document.querySelectorAll('[id^=back-btn]');
-    const main = document.querySelector('body');
-    const toggleSwitch = document.querySelector('.slider');
     let currentQuestionIndex = 0;
 
-    // Function to update question visibility
-    function updateQuestions() {
+    function showQuestion(index) {
+        questions.forEach((question, idx) => {
+            question.classList.remove('active');
+            if (idx === index) {
+                question.classList.add('active');
+            }
+        });
+    }
+
+    window.navigateQuestion = function (direction) {
+        currentQuestionIndex += direction;
+        if (currentQuestionIndex < 0) {
+            currentQuestionIndex = 0;
+        } else if (currentQuestionIndex >= questions.length) {
+            currentQuestionIndex = questions.length - 1;
+        }
+        showQuestion(currentQuestionIndex);
+    };
+
+    window.submitQuiz = function () {
+        let score = 0;
         questions.forEach((question, index) => {
-            if (index === currentQuestionIndex) {
-                question.style.left = "50px"; // Active question
-                question.style.opacity = "1";
-                question.style.visibility = "visible";
-                question.style.zIndex = "1";
-            } else {
-                question.style.left = index < currentQuestionIndex ? "-650px" : "650px"; // Move off-screen
-                question.style.opacity = "0";
-                question.style.visibility = "hidden";
-                question.style.zIndex = "0";
+            const correctAnswerKey = question.dataset.correctAnswer.trim();
+            const selectedOption = document.querySelector(`input[name="option${index + 1}"]:checked`);
+            if (selectedOption && selectedOption.dataset.key.trim() === correctAnswerKey) {
+                score++;
             }
         });
-    }
+        alert(`You scored ${score} out of ${questions.length}!`);
+    };
 
-    // Event listeners for navigation buttons
-    nextBtns.forEach((btn, idx) => {
-        btn.addEventListener('click', () => {
-            if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++;
-                updateQuestions();
-            }
-        });
-    });
-
-    backBtns.forEach((btn, idx) => {
-        btn.addEventListener('click', () => {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                updateQuestions();
-            }
+    questions.forEach((question, idx) => {
+        const options = question.querySelectorAll('input[type="radio"]');
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                const correctAnswerKey = question.dataset.correctAnswer.trim();
+                const selectedKey = option.dataset.key.trim();
+                console.log(`Correct Answer: ${correctAnswerKey}`); // Debugging
+                console.log(`Selected Answer: ${selectedKey}`); // Debugging
+                options.forEach(opt => {
+                    const label = opt.parentElement;
+                    if (opt.dataset.key.trim() === correctAnswerKey) {
+                        label.style.color = 'green'; // Correct answer turns green
+                    } else if (selectedKey === opt.dataset.key.trim()) {
+                        label.style.color = 'red'; // Incorrect answers turn red if selected
+                    }
+                });
+                // Disable options after selection
+                options.forEach(opt => opt.disabled = true);
+            });
         });
     });
 
-    // Uncheck radio buttons function
-    function uncheck() {
-        const radios = document.querySelectorAll('input[type="radio"]:checked');
-        radios.forEach((radio) => radio.checked = false);
-    }
-
-    // Dark mode toggle
-    toggleSwitch.addEventListener('click', () => {
-        main.classList.toggle('dark-theme');
-    });
-
-    // Initial setup
-    updateQuestions();
+    showQuestion(currentQuestionIndex);
 });
