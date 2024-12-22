@@ -1,8 +1,10 @@
 <?php
 
+
 use App\Models\file;
 // require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../models/file_class.php';
+
 
 // $controller = new FileGenController();
 // $controller->save();
@@ -68,6 +70,51 @@ class FileGenController
         }
     }
 
+    public function saveQA()
+    {
+        $conn = new mysqli('localhost', 'root', '', 'smartnotes_db');
+    
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Debug: Check if all the required fields are set
+            if (
+                isset($_POST['name'], $_POST['user_id'], $_POST['folder_id'], $_POST['content'], $_POST['file_type'])
+            ) {
+                // Debug: Print the form data to see if everything is being passed correctly
+                error_log('Form data: ' . print_r($_POST, true));
+    
+                $name = htmlspecialchars($_POST['name']);
+                $user_id = (int) $_POST['user_id'];
+                $folder_id = (int) $_POST['folder_id'];
+                $content = json_decode($_POST['content'], true);
+    
+                // Extract QA content and save it directly
+                $qa = $content['QA'] ?? '';
+    
+                // Escape the content for safety
+                $escaped_content = $conn->real_escape_string(json_encode(['Q' => $qa]));
+    
+                $file_type = (int) $_POST['file_type'];
+    
+                // Use the file class to save the file data
+                $note_id = file::create($name, $user_id, $folder_id, $escaped_content, $file_type);
+    
+                if ($note_id) {
+                    return "<div>Q&A saved successfully! Note ID: $note_id</div>";
+                } else {
+                    return "<div>Error saving the Q&A.</div>";
+                }
+            } else {
+                return "<div>Invalid data received.</div>";
+            }
+        } else {
+            return "<div>Invalid request method.</div>";
+        }
+    }
+    
 
     public function generateSummary($text)
     {
@@ -126,7 +173,7 @@ class FileGenController
             ]);
             $data = json_decode($response->getBody(), true);
             $_SESSION['qa'] = $data['summary'] ?? 'No questions and answers available';
-            header('Location: NEWflashcards.php');
+            header('Location: ../Views/NEWflashcards.php');
         } catch (Exception $e) {
             return "Error: " . $e->getMessage();
         }

@@ -16,11 +16,15 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 
-
 $file_id = isset($_SESSION['file_id']) ? $_SESSION['file_id'] : null;
 $folder_id = isset($_SESSION['folder_id']) ? $_SESSION['folder_id'] : null;
 $content = isset($_SESSION['content']) ? $_SESSION['content'] : "No content available.";
+$user_id = isset($_SESSION['UserID']) ? $_SESSION['UserID'] : null;
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['saveQA'])) {
+      $message = $GenController->saveQA();}}
 
 
 // Handle form submission
@@ -76,9 +80,7 @@ if (isset($_SESSION['qa'])) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['save_qa'])) {
-      $message = $GenController->save();}}
+
 
 $qa_lines = explode("\n", $qa);
 
@@ -388,13 +390,14 @@ button {
 
     <!-- Save button with AJAX submit -->
     
-    <form method="POST" id="saveQAForm" action="">
+    <form method="POST" id="saveQAform" action="">
   <input type="hidden" name="name" value="Habibaazzz Q&A">
   <input type="hidden" name="user_id" value="<?= htmlspecialchars($user_id) ?>">
   <input type="hidden" name="folder_id" value="<?= htmlspecialchars($folder_id) ?>">
-  <input type="hidden" name="content" value='<?= htmlspecialchars(json_encode(["QA" => $qa])) ?>'>
+  <input type="hidden" name="content" value='<?= htmlspecialchars($qa) ?>'>
+
   <input type="hidden" name="file_type" value="3"> <!-- Assuming file_type 3 represents Q&A -->
-  <button type="submit" name="save_qa" id="save_qa">Save Q&A</button>
+  <button type="submit" name="saveQA" id="saveQA">Save Q&A</button>
 </form>
 
     
