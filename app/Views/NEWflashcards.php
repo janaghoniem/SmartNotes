@@ -394,7 +394,7 @@ button {
   <input type="hidden" name="name" value="Habibaazzz Q&A">
   <input type="hidden" name="user_id" value="<?= htmlspecialchars($user_id) ?>">
   <input type="hidden" name="folder_id" value="<?= htmlspecialchars($folder_id) ?>">
-  <input type="hidden" name="content" value='<?= htmlspecialchars($qa) ?>'>
+  <input type="hidden" name="content" value='<?= htmlspecialchars(json_encode(["QA" => $qa])) ?>'>
 
   <input type="hidden" name="file_type" value="3"> <!-- Assuming file_type 3 represents Q&A -->
   <button type="submit" name="saveQA" id="saveQA">Save Q&A</button>

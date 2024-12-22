@@ -79,7 +79,7 @@ class FileGenController
         }
     
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Debug: Check if all the required fields are set
+            // Check if all the required fields are set
             if (
                 isset($_POST['name'], $_POST['user_id'], $_POST['folder_id'], $_POST['content'], $_POST['file_type'])
             ) {
@@ -89,15 +89,15 @@ class FileGenController
                 $name = htmlspecialchars($_POST['name']);
                 $user_id = (int) $_POST['user_id'];
                 $folder_id = (int) $_POST['folder_id'];
+                
                 $content = json_decode($_POST['content'], true);
+                $file_type = (int) $_POST['file_type'];
     
-                // Extract QA content and save it directly
+                // Extract QA content
                 $qa = $content['QA'] ?? '';
     
                 // Escape the content for safety
-                $escaped_content = $conn->real_escape_string(json_encode(['Q' => $qa]));
-    
-                $file_type = (int) $_POST['file_type'];
+                $escaped_content = $conn->real_escape_string(json_encode(['QA' => $qa]));
     
                 // Use the file class to save the file data
                 $note_id = file::create($name, $user_id, $folder_id, $escaped_content, $file_type);
@@ -114,6 +114,7 @@ class FileGenController
             return "<div>Invalid request method.</div>";
         }
     }
+    
     
 
     public function generateSummary($text)

@@ -198,6 +198,16 @@ $_SESSION['content'] = $file_id !== null ? $fileController->getFileContent($_SES
               <button type="submit" name="generate_qa">Generate QnA</button>
             </form>
           </div>
+          <div>
+            <form action="flashcards.php" method="POST" id="generateQnA" action="">
+              <input type="hidden" name="file_id"
+                value="<?= isset($_SESSION['file_id']) ? $_SESSION['file_id'] : '' ?>">
+             
+
+
+              <button type="submit" name="generated_qa">View Generated QnA</button>
+            </form>
+          </div>
 
           <?php if (!empty($summary)): ?>
             <p><strong>Summary:</strong> <?= htmlspecialchars($summary) ?></p>
