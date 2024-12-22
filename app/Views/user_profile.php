@@ -142,7 +142,6 @@ $answers = $surveyController->getUserAnswers($UserObject->id);
 
                         <select class="form-control text-secondary ml-0 survey-answer"
                           data-question-id="<?= $question_id ?>" style="width: 300px;">
-                          <option value="">Select</option>
                           <?php foreach ($question['options'] as $option): ?>
                             <option value="<?= $option['option_id'] ?>" <?= isset($answers[$question_id]) && $answers[$question_id]['selected_option'] == $option['option_id'] ? 'selected' : '' ?>>
                               <span><?= $option['answer_option'] ?></span>
@@ -159,7 +158,7 @@ $answers = $surveyController->getUserAnswers($UserObject->id);
               <div class="card white-card">
                 <div class="card-body">
                   <form action="" method="POST" id="form">
-                    <input type="hidden" name="user_id" id="user_id">
+                    <input type="hidden" name="user_id" id="user_id" value="<?php echo $UserObject->id ?>">
                     <div class="row">
                       <div class="col-sm-3">
                         <label class="mb-0">Username</label>

@@ -8,13 +8,14 @@ button{
     font-size: 16px;
     cursor: pointer;
     transition: 0.2s ease-in-out;
+    width:30vh;
 }
 button:hover {
     background: transparent;
     color: #222;
 }
 .wrapper{
-    margin-top:20%;
+    margin-top:5%;
 }
 .Summary-container {
     /* padding-top:30em; */
@@ -26,21 +27,41 @@ button:hover {
     width: 100%;
 }
 .row.come-in {
-    max-width: 60%; /* Adjust this value as needed */
-    overflow-x: auto; /* Enable horizontal scrolling */
+    width: 60%; /* Adjust the width as needed */
+    height: 100vh; /* Set the fixed height */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
     padding: 20px; /* Optional: Add some padding */
     box-sizing: border-box; /* Ensure padding is included in the width */
     background-color: #f9f9f9; /* Optional: Add a background color */
     border: 1px solid #ccc; /* Optional: Add a border */
+    display: block; /* Ensure the row behaves as a block element */
+    word-wrap: break-word; /* Prevent long text from overflowing horizontally */
+    white-space: normal; /* Allow text to wrap inside the container */
 }
 .button-container {
-    display: flex;
-    gap: 10px; /* Adds spacing between buttons */
-    justify-content: space-between; /* Adjust as needed */
-  }
-  
-  .button-container button {
-    flex: 1; /* Optional: Makes buttons flexible, you can adjust or remove */
-    margin: 5px; /* Adjusts spacing around individual buttons */
-  }
+    display: flex;           /* Enables flexbox */
+    gap: 10px;               /* Adds spacing between buttons */
+    justify-content: flex-start;  /* Align buttons to the left or modify as needed */
+    align-items: center;     /* Align buttons vertically in the center */
+    width: 100%;             /* Optional: Ensure the container takes up full width */
+}
+
+.button-container button {
+    padding: 0.5em 1.5em;    /* Optional: Adjust button padding */
+    font-size: 16px;          /* Optional: Set a consistent font size */
+    cursor: pointer;         /* Change cursor to pointer */
+    background-color: #222;  /* Set a background color */
+    color: #fff;             /* Set text color */
+    border: 1px solid #222;  /* Border around buttons */
+    border-radius: 4px;      /* Rounded corners */
+    
+}
+
+.button-container button:hover {
+    background-color: transparent; /* Change background on hover */
+    color: #222;                    /* Change text color on hover */
+}
+
+
+
   

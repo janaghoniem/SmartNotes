@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
         popup.style.color = '#fff';
         popup.style.padding = '20px';
         popup.style.borderRadius = '10px';
+        popup.style.zIndex = '999999999'; 
+
         popup.style.boxShadow = '0 0 40px rgba(0, 0, 0, 0.5)';
         popup.innerText = `You scored ${score} out of ${questions.length}!`;
 
@@ -60,9 +62,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 options.forEach(opt => {
                     const label = opt.parentElement;
                     if (opt.dataset.key.trim() === correctAnswerKey) {
-                        label.style.color = 'green'; // Correct answer turns green
+                        label.style.color = 'green'; // Correct answer 
                     } else if (selectedKey === opt.dataset.key.trim()) {
-                        label.style.color = 'red'; // Incorrect answers turn red if selected
+                        label.style.color = 'red'; // Incorrect answers 
                     }
                 });
                 // Disable options after selection

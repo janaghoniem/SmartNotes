@@ -7,78 +7,107 @@ function formatDoc(cmd, value = null) {
 }
 
 function addLink() {
-    const url = prompt("Insert URL:");
-    if (url) {
-        formatDoc("createLink", url);
-    }
+    const url = prompt('Insert url');
+    formatDoc('createLink', url);
 }
 
-const editorContent = document.getElementById("content");
+const content = document.getElementById('content');
 
-editorContent.addEventListener("mouseenter", function () {
-    const links = editorContent.querySelectorAll("a");
-    links.forEach(link => {
-        link.addEventListener("mouseenter", function () {
-            editorContent.setAttribute("contenteditable", false);
-            link.target = "_blank";
+content.addEventListener('mouseenter', function () {
+    const a = content.querySelectorAll('a');
+    a.forEach(item => {
+        item.addEventListener('mouseenter', function () {
+            content.setAttribute('contenteditable', false);
+            item.target = '_blank';
         });
-        link.addEventListener("mouseleave", function () {
-            editorContent.setAttribute("contenteditable", true);
+        item.addEventListener('mouseleave', function () {
+            content.setAttribute('contenteditable', true);
         });
     });
 });
 
-const showCode = document.getElementById("show-code");
-let isCodeActive = false;
+const showCode = document.getElementById('show-code');
+let active = false;
 
-const fileNameInput = document.getElementById("filename");
+const filename = document.getElementById('filename');
 
-function fileHandle(action) {
-    if (action === "new") {
-        editorContent.innerHTML = "";
-        fileNameInput.value = "untitled";
-    } else if (action === "txt") {
-        const blob = new Blob([editorContent.innerText]);
+function fileHandle(value) {
+    if (value === 'new') {
+        content.innerHTML = '';
+        filename.value = 'untitled';
+    } else if (value === 'txt') {
+        const blob = new Blob([content.innerText]);
         const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         link.href = url;
-        link.download = `${fileNameInput.value}.txt`;
+        link.download = `${filename.value}.txt`;
         link.click();
-    } else if (action === "pdf") {
-        html2pdf(editorContent).save(fileNameInput.value);
+    } else if (value === 'pdf') {
+        html2pdf(content).save(filename.value);
     }
 }
 
-const fontSelect = document.getElementById("fontSelect");
-fontSelect.addEventListener("change", function () {
-    formatDoc("fontName", this.value);
+const fontSelect = document.getElementById('fontSelect');
+fontSelect.addEventListener('change', function () {
+    formatDoc('fontName', this.value);
     this.selectedIndex = 0; // Reset the select box
 });
 
-document.getElementById("update-content").addEventListener("click", function () {
-    const userId = document.getElementById("userid").value;
-    const fileContentHTML = editorContent.innerHTML;
+document.addEventListener('DOMContentLoaded', function () {
+    const AddContentButton = document.getElementById('update-content');
+    console.log("DOM fully loaded");
 
-    fetch("path/to/api", {
-        method: "POST",
+    if (AddContentButton) {
+        console.log("AddContentButton found");
+        AddContentButton.addEventListener('click', function () {
+            console.log("AddContentButton clicked");
+            const contentDiv = document.getElementById('content');
+            const content = contentDiv.innerText || contentDiv.textContent; // Extract the text content from the div
+            const fileId = getQueryParam('id');
+            console.log("File ID from URL:", fileId);
+            console.log('Content to save:', content);
+            addcontent(content);
+        });
+    } else {
+        console.error('AddContentButton not found');
+    }
+});
+
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+function addcontent(content) {
+    const user_id = document.getElementById('userid').value;
+    const fileId = getQueryParam('id');
+    const folder_id = 1; // Assuming a default folder ID, replace with actual value if needed
+    const file_type = 4; // Assuming a default file type, replace with actual value if needed
+
+    console.log("File ID from URL:", fileId);
+    console.log('Content to save:', content);
+
+    fetch('../includes/FileContent.php', { // Ensure this path is correct
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify({
-            userId: userId,
-            content: fileContentHTML,
-        }),
+        body: `content=${encodeURIComponent(content)}&user_id=${user_id}&id=${fileId}&folder_id=${folder_id}&file_type=${file_type}`
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok.");
-            }
-            return response.json();
-        })
+        .then(response => response.text())
         .then(data => {
-            console.log("File saved successfully:", data);
+            console.log('Server response:', data);
+            if (data.includes("Record updated successfully") || data.includes("Record created successfully")) {
+                alert('Content saved successfully');
+            } else {
+                // Redirect to ../Views/UserDashboard.php
+                window.location.href = '../Views/UserDashboard.php';
+
+                console.log('Failed to save content. Response: ' + data);
+            }
         })
         .catch(error => {
-            console.error("Error savingg file:", error);
+            console.error('Error saving content:', error);
+            alert('Error saving content: ' + error);
         });
-});
+}

@@ -1,5 +1,6 @@
 <?php
-use App\Controllers\FolderController;
+
+require_once __DIR__ . '/../Controllers/FolderController.php';
 require_once __DIR__ . '../../Models/User.php';
 require_once __DIR__ . '/../../app/includes/session.php';
 
@@ -7,7 +8,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../Controllers/FolderController.php';
 
 
 if (isset($_POST["submit"])) {
@@ -158,3 +158,20 @@ if (isset($_POST['item_id']) && isset($_POST['item_type'])) {
     <p id="restrictionMessage"></p>
   </div>
 </div>
+
+<script>
+  document.getElementById('logout-btn-sidebar').addEventListener('click', function() {
+        if (confirm('Are you sure you want to log out?')) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../../app/includes/user_action.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert('Logged out successfully');
+                    window.location.href = 'login.php'; // Redirect to login page
+                }
+            };
+            xhr.send('action=logout');
+        }
+    });
+</script>

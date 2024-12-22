@@ -102,8 +102,8 @@ $admins = $userController->listUsers(1);  // Assuming 1 is the admin type
               </div>
               <div class="card-body">
                 <form method="POST" action="admin_user.php" id="form">
-                  <input type="hidden" name="user_id" id="user_id">
-                  <div class="row">
+                <input type="hidden" name="user_id" id="user_id" value="<?php echo $UserObject->id ?>">
+                <div class="row">
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label for="company">Company (disabled)</label>

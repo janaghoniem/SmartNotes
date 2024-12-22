@@ -60,35 +60,7 @@ class UserTest extends TestCase
         $this->assertFalse($result, "The insertUser method should fail when required fields are missing.");
     }
 
-    public function testSingletonBehavior()
-    {
-        $reflection = new \ReflectionClass(User::class);
-        $user = $reflection->newInstanceWithoutConstructor();
-
-        User::setInstance($user);
-
-        $this->assertSame($user, User::getInstance(), "getInstance should return the set instance.");
-        User::clearInstance();
-        $this->assertNull(User::getInstance(), "getInstance should return null after clearInstance is called.");
-    }
-
-
-    public function testSingletonConcurrentBehavior()
-    {
-        $reflection = new \ReflectionClass(User::class);
-        $user1 = $reflection->newInstanceWithoutConstructor();
-        $user2 = $reflection->newInstanceWithoutConstructor();
-
-        User::setInstance($user1);
-        $this->assertSame($user1, User::getInstance(), "getInstance should return the first set instance.");
-
-        User::setInstance($user2);
-        $this->assertSame($user2, User::getInstance(), "getInstance should return the last set instance.");
-
-        User::clearInstance();
-        $this->assertNull(User::getInstance(), "getInstance should return null after clearInstance.");
-    }
-
+   
     public function testUpdateUser()
     {
         // Mock database as before

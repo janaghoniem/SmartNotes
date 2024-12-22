@@ -2,6 +2,7 @@
 namespace App\Controllers;
 use App\Models\Survey;
 require_once __DIR__ . '/../Models/Survey.php';
+require_once __DIR__ . '/../Config/Database.php';
 
 class SurveyController
 {

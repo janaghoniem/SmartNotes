@@ -1,6 +1,7 @@
 <?php
-namespace App\Controllers;
+
 use App\Models\file;
+
 
 require_once __DIR__ . '/../includes/sidebar.php';
 class FolderController {

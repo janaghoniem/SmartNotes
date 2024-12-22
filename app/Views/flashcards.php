@@ -1,7 +1,7 @@
 <?php
-@session_start();
 include '../config/Database.php';
 include '../Models/file_class.php';
+require_once __DIR__ . '/../../app/includes/session.php';
 
 $current_page = 'Flash Cards';
 ini_set('display_errors', 1);
@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch Q&A pairs from the `files` table
-$sql = "SELECT id, name, content FROM files WHERE file_type = 3";
+$sql = "SELECT id, name, content FROM files WHERE file_type = 3 AND user_id = $UserObject->id";
 $result = $conn->query($sql);
 
 if (!$result) {
@@ -29,7 +29,7 @@ if (!$result) {
 
 $flashcards = [];
 
-if ($result->num_rows > 0) {
+if ($result->num_rows > 0 ) {
     while ($card = $result->fetch_assoc()) {
         
         // Decode HTML entities
@@ -61,6 +61,7 @@ if ($result->num_rows > 0) {
         } else {
             
         }
+    
     }
 } else {
     echo "No flashcards found.";
@@ -191,22 +192,22 @@ a:hover, a:focus {
 
 .card-big-shadow {
     position: relative;
-    perspective: 1000px; /* Enables 3D flipping */
+    perspective: 1000px; 
 }
 
 .card-flip {
-    transform-style: preserve-3d; /* Maintains 3D effect for children */
-    transition: transform 0.6s ease-in-out; /* Smooth flipping animation */
+    transform-style: preserve-3d; 
+    transition: transform 0.6s ease-in-out; 
     position: relative;
 }
 
 .card-flip.is-flipped {
-    transform: rotateY(180deg); /* Flipping effect */
+    transform: rotateY(180deg); 
 }
 
 .card-front,
 .card-back {
-    backface-visibility: hidden; /* Hides the back face when not visible */
+    backface-visibility: hidden; 
     position: absolute;
     width: 100%;
     height: 100%;
@@ -215,8 +216,7 @@ a:hover, a:focus {
 }
 
 .card-front {
-    /* Ensure the front card is shown initially */
-    display: flex; /* Enable flexbox for alignment */
+    display: flex; 
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -226,36 +226,35 @@ a:hover, a:focus {
 }
 
 .card-back {
-    /* Make sure the back card is hidden initially */
-    transform: rotateY(180deg); /* Rotate back card to hide it */
-    display: flex; /* Enable flexbox for alignment */
-    flex-direction: column; /* Stack elements vertically */
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
-    text-align: center; /* Center text alignment */
-    padding: 20px; /* Add spacing inside the back card */
-    height: 100%; /* Ensure it takes up full height of the card */
-    box-sizing: border-box; /* Include padding in height/width calculations */
-    background-color: #f4f4f4; /* Light background color for better readability */
-    color: #333; /* Dark text color for readability */
+    
+    transform: rotateY(180deg); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    padding: 20px; 
+    height: 100%; 
+    box-sizing: border-box; 
+    background-color: #f4f4f4; 
+    color: #333; 
 }
 
 .card-back .title, .card-back .description {
-    color: #333; /* Ensure text is readable */
+    color: #333; 
     font-size: 16px;
 }
 
 .card-back .category {
-    color: #555; /* Subtle color for category text */
+    color: #555; 
     font-size: 14px;
 }
 .content-col {
-    margin-bottom: 30px; /* Adjust this value to your preference */
+    margin-bottom: 30px; 
 }
 
-/* Add margin to the cards themselves if needed */
 .card-big-shadow {
-    margin: 10px; /* Adjust this value to control space between cards */
+    margin: 10px; 
 }
 
     </style>

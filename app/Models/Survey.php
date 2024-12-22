@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+use App\Config\Database;
 $con = new \mysqli("localhost", "root", "", "smartnotes_db");
 
 class Survey
@@ -29,6 +30,12 @@ class Survey
 
     public static function getUserAnswers($user_id)
     {
+        $conn = new \mysqli('localhost', 'root', '', 'smartnotes_db');
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
         // SQL query to fetch user's answers for each question
         $sql = "
                 SELECT a.question_id, 
