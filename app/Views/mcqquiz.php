@@ -179,13 +179,7 @@ if (!empty($question)) {
 <body>
     <?php include '../includes/sidebar.php'; ?>
 
-    <div class="buttons-container">
-        <form method="POST">
-            <button type="submit" name="regenerate_mcq" class="btn btn-primary">
-                Regenerate
-            </button>
-        </form>
-    </div>
+   
 
     <div class="quiz-container">
         <?php 
@@ -224,6 +218,14 @@ if (!empty($question)) {
             $counter++;
         } 
         ?>
+    </div>
+
+    <div class="buttons-container">
+        <form method="POST">
+            <button type="submit" name="regenerate_mcq" class="btn btn-primary">
+                Regenerate
+            </button>
+        </form>
     </div>
 </body>
 
