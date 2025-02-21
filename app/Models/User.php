@@ -106,21 +106,27 @@ class User
         }
         return null;
     }
-
+ 
     public static function logout()
     {
-        // Destroy the session
         session_start();
         session_unset();
-        session_destroy();
+        $sessionDestroyed = session_destroy(); // Returns true if successful
 
         if (self::$instance->userType_obj->id == 2) {
-            // Clear any session-related data (if applicable)
-            UserActivity::endSession(self::getInstance()->id);
+            // Attempt to end session activity
+            $sessionEnded = UserActivity::endSession(self::getInstance()->id);
+        } else {
+            $sessionEnded = true; // No session activity to end
         }
+
         // Reset the singleton instance
         self::clearInstance();
+
+        // Return true only if both actions succeeded
+        return $sessionDestroyed && $sessionEnded;
     }
+
 
     static function deleteUser($objUser)
     {

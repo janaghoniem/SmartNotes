@@ -3,7 +3,7 @@
 
 use App\Models\file;
 // require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../models/file_class.php';
+require_once __DIR__ . '/../Models/file_class.php';
 
 
 // $controller = new FileGenController();

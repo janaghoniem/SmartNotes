@@ -106,12 +106,13 @@ class UserController
     // Logs out the user
     public function logout()
     {
-        // Reset the Singleton instance
-        User::logout();
+        $success = User::logout(); // Call model function
 
-        // Redirect to login page
-        header("Location: /smartnotes/public/index.php");
-        exit;
+        if ($success) {
+            return true;
+        } else {
+            return false; // Logout failed
+        }
     }
 
 }

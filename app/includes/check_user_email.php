@@ -1,5 +1,8 @@
 <?php
+use App\Config\Database;
+
 require_once __DIR__ . '/../Config/Database.php';
+
 $conn = Database::getInstance()->getConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

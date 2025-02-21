@@ -152,7 +152,7 @@ if (isset($_POST['item_id']) && isset($_POST['item_type'])) {
 </div>
 
 <!-- Restriction Popup Modal -->
-<div id="restrictionPopup" class="modal">
+<div id="restrictionPopup" class="modal"> 
   <div class="modal-content">
     <span class="close" onclick="closeModal('restrictionPopup')">&times;</span>
     <p id="restrictionMessage"></p>
